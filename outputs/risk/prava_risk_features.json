@@ -1,0 +1,4983 @@
+{
+  "metadata": {
+    "pipeline_version": "flood_signal_engine_v4",
+    "description": "PRAVAH flood risk engine using current hydrological evidence, future outlook and lagged VIIRS flood corroboration",
+    "eo_policy": "VIIRS EO is lagged observational corroborating evidence and cannot independently trigger WARNING or CRITICAL",
+    "eo_max_risk_contribution": 15.0,
+    "generated_at": "2026-09-20T17:10:11.329768+00:00",
+    "district_count": 77
+  },
+  "statistics": {
+    "risk_levels": {
+      "LOW": 61,
+      "WATCH": 16,
+      "WARNING": 0,
+      "CRITICAL": 0
+    },
+    "confidence": {
+      "HIGH": 69,
+      "MODERATE": 8,
+      "LOW": 0
+    },
+    "eo_evidence": {
+      "STRONG": 3,
+      "MODERATE": 3,
+      "WEAK": 9,
+      "NONE": 62
+    },
+    "dominant_signals": {
+      "VIIRS_EO": 13,
+      "RIVER": 15,
+      "NONE": 49
+    },
+    "evidence_agreement": {
+      "HIGH": 62,
+      "PARTIAL_WITH_EO_CORROBORATION": 2,
+      "PARTIAL": 13
+    }
+  },
+  "districts": [
+    {
+      "district_id": 1,
+      "district": "Taplejung",
+      "risk": {
+        "level": "LOW",
+        "score": 14.8,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "VIIRS observed strong flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "STRONG",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 802,
+        "flood_ratio_pct": 1.224,
+        "eo_score": 86.82,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 13.02
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.089,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 2,
+      "district": "Panchthar",
+      "risk": {
+        "level": "LOW",
+        "score": 11.9,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "VIIRS observed moderate flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "MODERATE",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 61,
+        "flood_ratio_pct": 0.404,
+        "eo_score": 28.65,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 4.3
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.13,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 3,
+      "district": "Ilam",
+      "risk": {
+        "level": "WATCH",
+        "score": 22.76,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "VIIRS observed strong flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "STRONG",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 274,
+        "flood_ratio_pct": 1.409,
+        "eo_score": 100.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 15.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.138,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 4,
+      "district": "Jhapa",
+      "risk": {
+        "level": "WATCH",
+        "score": 63.81,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the danger threshold",
+        "Moderate hydrological signal",
+        "VIIRS observed strong flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_DANGER",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "STRONG",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL_WITH_EO_CORROBORATION"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 77,
+        "flood_ratio_pct": 0.713,
+        "eo_score": 50.57,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 7.59
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_DANGER",
+        "signal": 0.561,
+        "signal_strength": "MODERATE"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 5,
+      "district": "Morang",
+      "risk": {
+        "level": "WATCH",
+        "score": 56.36,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the danger threshold",
+        "Moderate hydrological signal"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_DANGER",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_DANGER",
+        "signal": 0.568,
+        "signal_strength": "MODERATE"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 3,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 6,
+      "district": "Sunsari",
+      "risk": {
+        "level": "WATCH",
+        "score": 55.62,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the danger threshold",
+        "Moderate hydrological signal"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_DANGER",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_DANGER",
+        "signal": 0.531,
+        "signal_strength": "MODERATE"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 5,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 7,
+      "district": "Dhankuta",
+      "risk": {
+        "level": "LOW",
+        "score": 9.17,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "VIIRS observed weak flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "WEAK",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 19,
+        "flood_ratio_pct": 0.221,
+        "eo_score": 15.68,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 2.35
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.091,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 8,
+      "district": "Terhathum",
+      "risk": {
+        "level": "LOW",
+        "score": 5.76,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NO_DATA",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "MODERATE",
+        "score": 0.52
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.038,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "PARTIAL",
+        "rainfall_available": true,
+        "river_available": false,
+        "river_station_count": 0,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 9,
+      "district": "Sankhuwasabha",
+      "risk": {
+        "level": "LOW",
+        "score": 3.39,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "VIIRS observed weak flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "WEAK",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 64,
+        "flood_ratio_pct": 0.136,
+        "eo_score": 9.67,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 1.45
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.097,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 10,
+      "district": "Bhojpur",
+      "risk": {
+        "level": "LOW",
+        "score": 10.4,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "VIIRS observed weak flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "WEAK",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 8,
+        "flood_ratio_pct": 0.058,
+        "eo_score": 4.11,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.62
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.089,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "MODERATE",
+        "forecast_runoff": "LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "ELEVATED",
+        "signal": 0.15,
+        "score": 3.0,
+        "rainfall_score": 2.0,
+        "runoff_score": 1.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 4,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 11,
+      "district": "Solukhumbu",
+      "risk": {
+        "level": "LOW",
+        "score": 1.2,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.06,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 3,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 12,
+      "district": "Khotang",
+      "risk": {
+        "level": "LOW",
+        "score": 6.33,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "VIIRS observed weak flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "WEAK",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 11,
+        "flood_ratio_pct": 0.097,
+        "eo_score": 6.86,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 1.03
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.015,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 3,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 13,
+      "district": "Okhaldhunga",
+      "risk": {
+        "level": "LOW",
+        "score": 5.34,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.017,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 14,
+      "district": "Udayapur",
+      "risk": {
+        "level": "WATCH",
+        "score": 61.81,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the danger threshold",
+        "Moderate hydrological signal",
+        "VIIRS observed moderate flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_DANGER",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "MODERATE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL_WITH_EO_CORROBORATION"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 64,
+        "flood_ratio_pct": 0.51,
+        "eo_score": 36.17,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 5.43
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_DANGER",
+        "signal": 0.569,
+        "signal_strength": "MODERATE"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 4,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 15,
+      "district": "Saptari",
+      "risk": {
+        "level": "LOW",
+        "score": 0.1,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NO_DATA",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "MODERATE",
+        "score": 0.52
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.005,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "PARTIAL",
+        "rainfall_available": true,
+        "river_available": false,
+        "river_station_count": 0,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 16,
+      "district": "Siraha",
+      "risk": {
+        "level": "WATCH",
+        "score": 50.6,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the danger threshold",
+        "Moderate hydrological signal"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_DANGER",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_DANGER",
+        "signal": 0.53,
+        "signal_strength": "MODERATE"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 17,
+      "district": "Dhanusa",
+      "risk": {
+        "level": "LOW",
+        "score": 0.22,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NO_DATA",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "MODERATE",
+        "score": 0.52
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.011,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "PARTIAL",
+        "rainfall_available": true,
+        "river_available": false,
+        "river_station_count": 0,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 18,
+      "district": "Mahottari",
+      "risk": {
+        "level": "LOW",
+        "score": 0.12,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NO_DATA",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "MODERATE",
+        "score": 0.52
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.006,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "PARTIAL",
+        "rainfall_available": true,
+        "river_available": false,
+        "river_station_count": 0,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 19,
+      "district": "Sarlahi",
+      "risk": {
+        "level": "WATCH",
+        "score": 27.7,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the warning threshold"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_WARNING",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 3,
+        "flood_ratio_pct": 0.013,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_WARNING",
+        "signal": 0.135,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 20,
+      "district": "Rautahat",
+      "risk": {
+        "level": "WATCH",
+        "score": 56.26,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the danger threshold",
+        "Moderate hydrological signal"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_DANGER",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_DANGER",
+        "signal": 0.563,
+        "signal_strength": "MODERATE"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 6,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 21,
+      "district": "Bara",
+      "risk": {
+        "level": "LOW",
+        "score": 7.04,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.102,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 22,
+      "district": "Parsa",
+      "risk": {
+        "level": "LOW",
+        "score": 6.26,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.063,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 3,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 23,
+      "district": "Sindhuli",
+      "risk": {
+        "level": "LOW",
+        "score": 5.34,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.017,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 24,
+      "district": "Ramechhap",
+      "risk": {
+        "level": "LOW",
+        "score": 2.54,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.077,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.05,
+        "score": 1.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 1.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 25,
+      "district": "Dolakha",
+      "risk": {
+        "level": "LOW",
+        "score": 1.3,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.065,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 3,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 26,
+      "district": "Sindhupalchok",
+      "risk": {
+        "level": "WATCH",
+        "score": 20.12,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the warning threshold"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_WARNING",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_WARNING",
+        "signal": 0.006,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 27,
+      "district": "Kavrepalanchok",
+      "risk": {
+        "level": "WATCH",
+        "score": 51.18,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the danger threshold",
+        "Moderate hydrological signal"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_DANGER",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_DANGER",
+        "signal": 0.559,
+        "signal_strength": "MODERATE"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 5,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 28,
+      "district": "Lalitpur",
+      "risk": {
+        "level": "WATCH",
+        "score": 51.22,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the danger threshold",
+        "Moderate hydrological signal"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_DANGER",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_DANGER",
+        "signal": 0.561,
+        "signal_strength": "MODERATE"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 3,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 29,
+      "district": "Bhaktapur",
+      "risk": {
+        "level": "WATCH",
+        "score": 51.12,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the danger threshold",
+        "Moderate hydrological signal"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_DANGER",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_DANGER",
+        "signal": 0.556,
+        "signal_strength": "MODERATE"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 30,
+      "district": "Kathmandu",
+      "risk": {
+        "level": "WATCH",
+        "score": 24.48,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the warning threshold"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_WARNING",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_WARNING",
+        "signal": 0.224,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 31,
+      "district": "Nuwakot",
+      "risk": {
+        "level": "WATCH",
+        "score": 51.12,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the danger threshold",
+        "Moderate hydrological signal"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_DANGER",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_DANGER",
+        "signal": 0.556,
+        "signal_strength": "MODERATE"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 3,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 32,
+      "district": "Rasuwa",
+      "risk": {
+        "level": "WATCH",
+        "score": 50.9,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the danger threshold",
+        "Moderate hydrological signal"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_DANGER",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_DANGER",
+        "signal": 0.545,
+        "signal_strength": "MODERATE"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 3,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 33,
+      "district": "Dhading",
+      "risk": {
+        "level": "WATCH",
+        "score": 51.0,
+        "severity": "ELEVATED"
+      },
+      "drivers": [
+        "River level is approaching the danger threshold",
+        "Moderate hydrological signal"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NEAR_DANGER",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "RIVER",
+        "agreement": "PARTIAL"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NEAR_DANGER",
+        "signal": 0.55,
+        "signal_strength": "MODERATE"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 34,
+      "district": "Makwanpur",
+      "risk": {
+        "level": "LOW",
+        "score": 5.36,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NO_DATA",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "MODERATE",
+        "score": 0.52
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.018,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "PARTIAL",
+        "rainfall_available": true,
+        "river_available": false,
+        "river_station_count": 0,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 35,
+      "district": "Chitawan",
+      "risk": {
+        "level": "LOW",
+        "score": 6.48,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.074,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 36,
+      "district": "Gorkha",
+      "risk": {
+        "level": "LOW",
+        "score": 4.88,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.094,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "MODERATE",
+        "forecast_runoff": "LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "ELEVATED",
+        "signal": 0.15,
+        "score": 3.0,
+        "rainfall_score": 2.0,
+        "runoff_score": 1.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 3,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 37,
+      "district": "Lamjung",
+      "risk": {
+        "level": "LOW",
+        "score": 0.32,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NO_DATA",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 2,
+        "flood_ratio_pct": 0.007,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "MODERATE",
+        "score": 0.52
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.016,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "PARTIAL",
+        "rainfall_available": true,
+        "river_available": false,
+        "river_station_count": 0,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 38,
+      "district": "Manang",
+      "risk": {
+        "level": "LOW",
+        "score": 0.15,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "VIIRS observed weak flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "WEAK",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 5,
+        "flood_ratio_pct": 0.011,
+        "eo_score": 0.75,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.11
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.002,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 6,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 39,
+      "district": "Kaski",
+      "risk": {
+        "level": "LOW",
+        "score": 1.18,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 3,
+        "flood_ratio_pct": 0.008,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.059,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 40,
+      "district": "Tanahu",
+      "risk": {
+        "level": "LOW",
+        "score": 5.78,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.039,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 41,
+      "district": "Syangja",
+      "risk": {
+        "level": "LOW",
+        "score": 0.28,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.014,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 42,
+      "district": "Parbat",
+      "risk": {
+        "level": "LOW",
+        "score": 0.18,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.009,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 43,
+      "district": "Baglung",
+      "risk": {
+        "level": "LOW",
+        "score": 1.42,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.071,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 4,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 44,
+      "district": "Myagdi",
+      "risk": {
+        "level": "LOW",
+        "score": 1.82,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.091,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 3,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 45,
+      "district": "Mustang",
+      "risk": {
+        "level": "LOW",
+        "score": 2.83,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "VIIRS observed weak flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "WEAK",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 47,
+        "flood_ratio_pct": 0.066,
+        "eo_score": 4.71,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.71
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.106,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 5,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 46,
+      "district": "Nawalparasi East",
+      "risk": {
+        "level": "LOW",
+        "score": 7.24,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.112,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 47,
+      "district": "Palpa",
+      "risk": {
+        "level": "LOW",
+        "score": 5.56,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.028,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 48,
+      "district": "Nawalparasi West",
+      "risk": {
+        "level": "LOW",
+        "score": 0.22,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.011,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 49,
+      "district": "Rupandehi",
+      "risk": {
+        "level": "LOW",
+        "score": 1.26,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.063,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 50,
+      "district": "Kapilbastu",
+      "risk": {
+        "level": "LOW",
+        "score": 0.34,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NO_DATA",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "MODERATE",
+        "score": 0.52
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.017,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "PARTIAL",
+        "rainfall_available": true,
+        "river_available": false,
+        "river_station_count": 0,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 51,
+      "district": "Arghakhanchi",
+      "risk": {
+        "level": "LOW",
+        "score": 5.54,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.027,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 52,
+      "district": "Gulmi",
+      "risk": {
+        "level": "LOW",
+        "score": 1.28,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.064,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 53,
+      "district": "Rukum East",
+      "risk": {
+        "level": "LOW",
+        "score": 1.16,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.008,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.05,
+        "score": 1.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 1.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 54,
+      "district": "Rolpa",
+      "risk": {
+        "level": "LOW",
+        "score": 2.16,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.108,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 55,
+      "district": "Pyuthan",
+      "risk": {
+        "level": "LOW",
+        "score": 0.14,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NO_DATA",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "MODERATE",
+        "score": 0.52
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.007,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "PARTIAL",
+        "rainfall_available": true,
+        "river_available": false,
+        "river_station_count": 0,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 56,
+      "district": "Dang",
+      "risk": {
+        "level": "LOW",
+        "score": 1.28,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.064,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 57,
+      "district": "Banke",
+      "risk": {
+        "level": "LOW",
+        "score": 1.88,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.094,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 58,
+      "district": "Bardiya",
+      "risk": {
+        "level": "LOW",
+        "score": 0.22,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 1,
+        "flood_ratio_pct": 0.004,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.011,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 3,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 59,
+      "district": "Rukum West",
+      "risk": {
+        "level": "LOW",
+        "score": 0.2,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.01,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 3,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 60,
+      "district": "Salyan",
+      "risk": {
+        "level": "LOW",
+        "score": 2.12,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.106,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 61,
+      "district": "Surkhet",
+      "risk": {
+        "level": "LOW",
+        "score": 1.32,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 2,
+        "flood_ratio_pct": 0.004,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.066,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 62,
+      "district": "Jajarkot",
+      "risk": {
+        "level": "LOW",
+        "score": 1.36,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.068,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 63,
+      "district": "Dailekh",
+      "risk": {
+        "level": "LOW",
+        "score": 0.12,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.006,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 64,
+      "district": "Dolpa",
+      "risk": {
+        "level": "LOW",
+        "score": 1.9,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "VIIRS observed weak flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "WEAK",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 8,
+        "flood_ratio_pct": 0.005,
+        "eo_score": 0.38,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.06
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.092,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 5,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 65,
+      "district": "Jumla",
+      "risk": {
+        "level": "LOW",
+        "score": 1.66,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.083,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 5,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 66,
+      "district": "Kalikot",
+      "risk": {
+        "level": "LOW",
+        "score": 1.02,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.051,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 4,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 67,
+      "district": "Mugu",
+      "risk": {
+        "level": "LOW",
+        "score": 2.06,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 1,
+        "flood_ratio_pct": 0.002,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.103,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 8,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 68,
+      "district": "Humla",
+      "risk": {
+        "level": "LOW",
+        "score": 2.14,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "VIIRS observed weak flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "WEAK",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 7,
+        "flood_ratio_pct": 0.006,
+        "eo_score": 0.43,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.06
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.104,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 69,
+      "district": "Bajhang",
+      "risk": {
+        "level": "LOW",
+        "score": 1.76,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.088,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 4,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 70,
+      "district": "Bajura",
+      "risk": {
+        "level": "LOW",
+        "score": 0.12,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.006,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 1,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 71,
+      "district": "Achham",
+      "risk": {
+        "level": "LOW",
+        "score": 0.1,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.005,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 4,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 72,
+      "district": "Doti",
+      "risk": {
+        "level": "LOW",
+        "score": 1.44,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.072,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 73,
+      "district": "Kailali",
+      "risk": {
+        "level": "LOW",
+        "score": 2.29,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "VIIRS observed weak flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "WEAK",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 12,
+        "flood_ratio_pct": 0.031,
+        "eo_score": 2.17,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.33
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.098,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 4,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 74,
+      "district": "Kanchanpur",
+      "risk": {
+        "level": "LOW",
+        "score": 5.94,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "VIIRS observed moderate flood evidence in the latest satellite observation"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "MODERATE",
+        "dominant_signal": "VIIRS_EO",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": true,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 55,
+        "flood_ratio_pct": 0.376,
+        "eo_score": 26.67,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 4.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.097,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 6,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": true
+      }
+    },
+    {
+      "district_id": 75,
+      "district": "Dadeldhura",
+      "risk": {
+        "level": "LOW",
+        "score": 1.9,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 3,
+        "flood_ratio_pct": 0.115,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.095,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 8,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 76,
+      "district": "Baitadi",
+      "risk": {
+        "level": "LOW",
+        "score": 1.96,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.098,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 4,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    },
+    {
+      "district_id": 77,
+      "district": "Darchula",
+      "risk": {
+        "level": "LOW",
+        "score": 1.4,
+        "severity": "NORMAL"
+      },
+      "drivers": [
+        "No strong current flood driver detected"
+      ],
+      "evidence": {
+        "rainfall": "LOW",
+        "runoff": "VERY_LOW",
+        "river": "NORMAL",
+        "antecedent_rainfall": "VERY_LOW",
+        "eo_flood": "NONE",
+        "dominant_signal": "NONE",
+        "agreement": "HIGH"
+      },
+      "eo_observation": {
+        "available": false,
+        "observation_date": "2026-09-19",
+        "source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+        "resolution": "250m",
+        "flood_pixels": 0,
+        "flood_ratio_pct": 0.0,
+        "eo_score": 0.0,
+        "temporal_role": "LAGGED_OBSERVATION",
+        "risk_score_contribution": 0.0
+      },
+      "confidence": {
+        "level": "HIGH",
+        "score": 0.7
+      },
+      "hydrology": {
+        "state": "NORMAL",
+        "signal": 0.07,
+        "signal_strength": "WEAK"
+      },
+      "future_evidence": {
+        "forecast_available": true,
+        "geoglows_available": false,
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "signal": 0.0,
+        "score": 0.0,
+        "rainfall_score": 0.0,
+        "runoff_score": 0.0,
+        "geoglows_score": 0.0
+      },
+      "data_quality": {
+        "overall": "GOOD",
+        "rainfall_available": true,
+        "river_available": true,
+        "river_station_count": 2,
+        "forecast_available": true,
+        "geoglows_available": false,
+        "geoglows_station_count": 0,
+        "eo_available": false
+      }
+    }
+  ]
+}

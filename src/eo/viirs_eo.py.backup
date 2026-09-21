@@ -1,0 +1,444 @@
+import h5py
+import geopandas as gpd
+import numpy as np
+import json
+from datetime import datetime, timezone
+from rasterio.features import rasterize
+from rasterio.transform import from_origin
+from src.config import GEOJSON_PATH, VIIRS_DIR, EO_FEATURES_FILE
+
+GEOJSON = str(GEOJSON_PATH)
+
+ALL_FILES = sorted(VIIRS_DIR.glob("VCDWD_L3_NRT*.h5"))
+
+# Only tiles covering Nepal:
+# h26v06 = 80-90E, 20-30N
+# h26v05 = 80-90E, 30-40N
+FILES = [
+    f for f in ALL_FILES
+    if ".h26v05." in f.name or ".h26v06." in f.name
+]
+
+if not FILES:
+    raise FileNotFoundError(
+        f"No Nepal-covering VIIRS H5 files found in: {VIIRS_DIR}"
+    )
+
+BASE = "HDFEOS/GRIDS/Flood_Composite/Data Fields"
+
+MIN_FLOOD_PIXELS = 5
+
+
+print("=" * 85)
+print("PRAVAH - VIIRS EO FEATURE GENERATION")
+print("=" * 85)
+
+
+# ============================================================
+# 1. LOAD DISTRICTS
+# ============================================================
+
+districts = gpd.read_file(GEOJSON).to_crs("EPSG:4326")
+
+print("Districts loaded:", len(districts))
+
+
+# ============================================================
+# 2. STORAGE
+# ============================================================
+
+district_flood = {
+    name: 0
+    for name in districts["adm2_name"]
+}
+
+district_valid = {
+    name: 0
+    for name in districts["adm2_name"]
+}
+
+
+# ============================================================
+# 3. PROCESS VIIRS TILES
+# ============================================================
+
+for filename in FILES:
+
+    print("\nProcessing:", filename)
+
+    with h5py.File(filename, "r") as f:
+
+        flood = f[f"{BASE}/Flood_1Day_250m"][:]
+        valid = f[f"{BASE}/ValidCounts_1Day_250m"][:]
+
+        lat = f[f"{BASE}/lat"][:]
+        lon = f[f"{BASE}/lon"][:]
+
+    # --------------------------------------------------------
+    # Nepal bounding box
+    # --------------------------------------------------------
+
+    lat_idx = np.where(
+        (lat >= 26.0) &
+        (lat <= 31.2)
+    )[0]
+
+    lon_idx = np.where(
+        (lon >= 80.0) &
+        (lon <= 89.0)
+    )[0]
+
+    flood = flood[np.ix_(lat_idx, lon_idx)]
+    valid = valid[np.ix_(lat_idx, lon_idx)]
+
+    lat = lat[lat_idx]
+    lon = lon[lon_idx]
+
+    # --------------------------------------------------------
+    # Pixel resolution
+    # --------------------------------------------------------
+
+    pixel_y = abs(lat[1] - lat[0])
+    pixel_x = abs(lon[1] - lon[0])
+
+    # Rasterio uses north -> south
+    flood = np.flipud(flood)
+    valid = np.flipud(valid)
+
+    lat = lat[::-1]
+
+    transform = from_origin(
+        lon.min() - pixel_x / 2,
+        lat.max() + pixel_y / 2,
+        pixel_x,
+        pixel_y
+    )
+
+    # --------------------------------------------------------
+    # Rasterize districts
+    # --------------------------------------------------------
+
+    shapes = [
+        (geometry, idx + 1)
+        for idx, geometry in enumerate(districts.geometry)
+    ]
+
+    district_raster = rasterize(
+        shapes,
+        out_shape=flood.shape,
+        transform=transform,
+        fill=0,
+        dtype="int16"
+    )
+
+    # --------------------------------------------------------
+    # Masks
+    # --------------------------------------------------------
+
+    valid_mask = valid > 0
+
+    flood_mask = (
+        (flood == 3) &
+        valid_mask
+    )
+
+    # --------------------------------------------------------
+    # District statistics
+    # --------------------------------------------------------
+
+    for idx, name in enumerate(districts["adm2_name"]):
+
+        district_id = idx + 1
+
+        mask = district_raster == district_id
+
+        district_flood[name] += np.count_nonzero(
+            flood_mask & mask
+        )
+
+        district_valid[name] += np.count_nonzero(
+            valid_mask & mask
+        )
+
+
+# ============================================================
+# 4. CREATE EO FEATURES
+# ============================================================
+
+eo_districts = {}
+
+ratios = []
+
+for idx, name in enumerate(districts["adm2_name"]):
+
+    flood_count = district_flood[name]
+    valid_count = district_valid[name]
+
+    if valid_count > 0:
+        flood_ratio = flood_count / valid_count
+    else:
+        flood_ratio = 0.0
+
+    ratios.append(flood_ratio)
+
+
+# ============================================================
+# 5. RELATIVE SCORE
+# ============================================================
+
+meaningful_ratios = [
+    r for i, r in enumerate(ratios)
+    if district_flood[list(district_flood.keys())[i]]
+    >= MIN_FLOOD_PIXELS
+]
+
+if meaningful_ratios:
+    max_ratio = max(meaningful_ratios)
+else:
+    max_ratio = 0.0
+
+
+for idx, name in enumerate(districts["adm2_name"]):
+
+    flood_count = district_flood[name]
+    valid_count = district_valid[name]
+
+    if valid_count > 0:
+        flood_ratio = flood_count / valid_count
+    else:
+        flood_ratio = 0.0
+
+    # --------------------------------------------------------
+    # Relative EO score
+    # --------------------------------------------------------
+
+    if (
+        max_ratio > 0 and
+        flood_count >= MIN_FLOOD_PIXELS
+    ):
+
+        eo_score = (
+            flood_ratio /
+            max_ratio
+        ) * 100
+
+    else:
+
+        eo_score = 0.0
+
+    # --------------------------------------------------------
+    # Evidence strength
+    # --------------------------------------------------------
+
+    if flood_count < MIN_FLOOD_PIXELS:
+
+        strength = "NONE"
+
+    elif eo_score >= 50:
+
+        strength = "STRONG"
+
+    elif eo_score >= 20:
+
+        strength = "MODERATE"
+
+    else:
+
+        strength = "WEAK"
+
+    eo_districts[name] = {
+
+        "district_id": int(idx + 1),
+
+        "district": name,
+
+        "eo": {
+
+            "flood_pixels": int(flood_count),
+
+            "valid_pixels": int(valid_count),
+
+            "flood_ratio": round(
+                flood_ratio,
+                6
+            ),
+
+            "flood_ratio_pct": round(
+                flood_ratio * 100,
+                3
+            ),
+
+            "eo_score": round(
+                eo_score,
+                2
+            ),
+
+            "evidence_strength": strength
+
+        },
+
+        "source_information": {
+
+            "product":
+                "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+
+            "product_short_name":
+                "VCDWD_L3_NRT",
+
+            "observation_period":
+                "2026-09-13",
+
+            "resolution":
+                "250m",
+
+            "flood_flag":
+                3,
+
+            "flood_flag_meaning":
+                "flood"
+
+        },
+
+        "data_quality": {
+
+            "valid_observations":
+                int(valid_count),
+
+            "meaningful_flood_signal":
+                bool(flood_count >= MIN_FLOOD_PIXELS)
+
+        }
+
+    }
+
+
+# ============================================================
+# 6. BUILD OUTPUT
+# ============================================================
+
+output = {
+
+    "project": "PRAVAH",
+
+    "pipeline_version":
+        "viirs_eo_v1",
+
+    "generated_at_utc":
+        datetime.now(timezone.utc).isoformat(),
+
+    "source":
+
+        "NASA VIIRS NRT Global Flood Composite",
+
+    "product":
+
+        "VCDWD_L3_NRT",
+
+    "observation_date":
+
+        "2026-09-13",
+
+    "resolution":
+
+        "250m",
+
+    "district_count":
+
+        len(eo_districts),
+
+    "minimum_flood_pixels":
+
+        MIN_FLOOD_PIXELS,
+
+    "semantics":
+
+        "EO flood evidence only; not a standalone risk classification",
+
+    "districts":
+
+        eo_districts
+
+}
+
+
+# ============================================================
+# 7. SAVE
+# ============================================================
+
+with open(
+    str(EO_FEATURES_FILE),
+    "w"
+) as f:
+
+    json.dump(
+        output,
+        f,
+        indent=2
+    )
+
+
+# ============================================================
+# 8. SUMMARY
+# ============================================================
+
+meaningful = [
+    x for x in eo_districts.values()
+    if x["eo"]["flood_pixels"] >= MIN_FLOOD_PIXELS
+]
+
+strong = [
+    x for x in meaningful
+    if x["eo"]["evidence_strength"] == "STRONG"
+]
+
+print("\n")
+print("=" * 85)
+print("VIIRS EO FEATURE SUMMARY")
+print("=" * 85)
+
+print(
+    "Districts processed:",
+    len(eo_districts)
+)
+
+print(
+    "Meaningful EO evidence:",
+    len(meaningful)
+)
+
+print(
+    "Strong EO evidence:",
+    len(strong)
+)
+
+print(
+    "Output:",
+    "prava_eo_features.json"
+)
+
+print("=" * 85)
+
+
+# ============================================================
+# 9. TOP DISTRICTS
+# ============================================================
+
+meaningful.sort(
+    key=lambda x:
+        x["eo"]["eo_score"],
+    reverse=True
+)
+
+print("\nTop EO signals:")
+
+for item in meaningful[:10]:
+
+    print(
+        f"{item['district']:25s}"
+        f"Flood={item['eo']['flood_pixels']:6d}  "
+        f"Ratio={item['eo']['flood_ratio_pct']:6.2f}%  "
+        f"Score={item['eo']['eo_score']:6.1f}  "
+        f"{item['eo']['evidence_strength']}"
+    )
+
+print("=" * 85)

@@ -1,0 +1,3359 @@
+{
+  "project": "PRAVAH",
+  "pipeline_version": "risk_engine_v3",
+  "generated_at_utc": "2026-09-14T08:20:31.116869+00:00",
+  "risk_levels": {
+    "LOW": 76,
+    "WATCH": 1,
+    "WARNING": 0,
+    "CRITICAL": 0
+  },
+  "future_outlook": {
+    "NORMAL": 13,
+    "ELEVATED": 64
+  },
+  "methodology": {
+    "current_risk": "Current risk preserves the validated Risk Engine V2 scoring and thresholds.",
+    "rainfall": "NASA IMERG Early 6-hour district rainfall is the primary rainfall input for SCS-CN.",
+    "runoff": "SCS-CN estimates direct runoff depth in mm.",
+    "bipad_rain": "BIPAD 1-hour rainfall is retained as local observation evidence.",
+    "river": "BIPAD river observations provide station-level evidence.",
+    "future": "Forecast rainfall, forecast runoff and GEOGLOWS evidence are reported as a separate future outlook.",
+    "future_risk_policy": "Future ELEVATED outlook does not automatically increase the current risk level.",
+    "geoglows_note": "GEOGLOWS discharge is treated as future hydrological evidence and is not directly compared with BIPAD water-level thresholds.",
+    "unit_note": "SCS-CN runoff depth in mm is not directly compared with river discharge thresholds in m3/s."
+  },
+  "freshness": {
+    "nasa": {},
+    "bipad_rain": {},
+    "bipad_river": {}
+  },
+  "districts": {
+    "1": {
+      "district_id": 1,
+      "district": "Taplejung",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "MODERATE",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 4.6375,
+        "bipad_1h_mm": 2.025,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "2": {
+      "district_id": 2,
+      "district": "Panchthar",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 6.566666666666666,
+        "bipad_1h_mm": 0.5,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "3": {
+      "district_id": 3,
+      "district": "Ilam",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.3,
+        "bipad_1h_mm": 0.5,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "4": {
+      "district_id": 4,
+      "district": "Jhapa",
+      "risk": {
+        "score": 40,
+        "raw_score": 40,
+        "level": "WATCH",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.35882352941176476,
+        "bipad_1h_mm": 0.2,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 1,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        },
+        {
+          "type": "river_danger",
+          "stations": 1,
+          "points": 40
+        }
+      ]
+    },
+    "5": {
+      "district_id": 5,
+      "district": "Morang",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.26470588235294124,
+        "bipad_1h_mm": 0.2,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "6": {
+      "district_id": 6,
+      "district": "Sunsari",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.25,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "7": {
+      "district_id": 7,
+      "district": "Dhankuta",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.6571428571428571,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "8": {
+      "district_id": 8,
+      "district": "Terhathum",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "MODERATE",
+        "forecast_runoff": "LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.75,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "9": {
+      "district_id": 9,
+      "district": "Sankhuwasabha",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "STABLE",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.4666666666666666,
+        "bipad_1h_mm": 0.5599999999999999,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "10": {
+      "district_id": 10,
+      "district": "Bhojpur",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "MODERATE",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 2.8599999999999994,
+        "bipad_1h_mm": 3.087142857142857,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "11": {
+      "district_id": 11,
+      "district": "Solukhumbu",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.296774193548387,
+        "bipad_1h_mm": 1.2249999999999999,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "12": {
+      "district_id": 12,
+      "district": "Khotang",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 6.833333333333333,
+        "bipad_1h_mm": 0.6857142857142858,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "13": {
+      "district_id": 13,
+      "district": "Okhaldhunga",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.35,
+        "bipad_1h_mm": 0.4,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "14": {
+      "district_id": 14,
+      "district": "Udayapur",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.29473684210526313,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "15": {
+      "district_id": 15,
+      "district": "Saptari",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "STABLE",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.0,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "16": {
+      "district_id": 16,
+      "district": "Siraha",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.0,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "17": {
+      "district_id": 17,
+      "district": "Dhanusa",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.0,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "18": {
+      "district_id": 18,
+      "district": "Mahottari",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.0,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "19": {
+      "district_id": 19,
+      "district": "Sarlahi",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "STABLE",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.0,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "20": {
+      "district_id": 20,
+      "district": "Rautahat",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.0,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "21": {
+      "district_id": 21,
+      "district": "Bara",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "STABLE",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.0,
+        "bipad_1h_mm": 6.199999999999999,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "22": {
+      "district_id": 22,
+      "district": "Parsa",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.0,
+        "bipad_1h_mm": 1.3,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "23": {
+      "district_id": 23,
+      "district": "Sindhuli",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.03636363636363637,
+        "bipad_1h_mm": 3.2,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "24": {
+      "district_id": 24,
+      "district": "Ramechhap",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.24375,
+        "bipad_1h_mm": 5.6,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "25": {
+      "district_id": 25,
+      "district": "Dolakha",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.7578947368421053,
+        "bipad_1h_mm": 1.2666666666666666,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "26": {
+      "district_id": 26,
+      "district": "Sindhupalchok",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 4.518181818181818,
+        "bipad_1h_mm": 1.0666666666666667,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "27": {
+      "district_id": 27,
+      "district": "Kavrepalanchok",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.44285714285714284,
+        "bipad_1h_mm": 0.6,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "28": {
+      "district_id": 28,
+      "district": "Lalitpur",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.325,
+        "bipad_1h_mm": 0.2,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "29": {
+      "district_id": 29,
+      "district": "Bhaktapur",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.2,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "30": {
+      "district_id": 30,
+      "district": "Kathmandu",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 4.166666666666667,
+        "bipad_1h_mm": 3.5999999999999996,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "31": {
+      "district_id": 31,
+      "district": "Nuwakot",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 7.145454545454546,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "32": {
+      "district_id": 32,
+      "district": "Rasuwa",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 2.85,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "33": {
+      "district_id": 33,
+      "district": "Dhading",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.7333333333333334,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "34": {
+      "district_id": 34,
+      "district": "Makwanpur",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.14285714285714288,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "35": {
+      "district_id": 35,
+      "district": "Chitawan",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.2391304347826087,
+        "bipad_1h_mm": 0.4,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "36": {
+      "district_id": 36,
+      "district": "Gorkha",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "MODERATE",
+        "forecast_runoff": "LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.7424242424242424,
+        "bipad_1h_mm": 3.9333333333333336,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "37": {
+      "district_id": 37,
+      "district": "Lamjung",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 9.45625,
+        "bipad_1h_mm": 4.0,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "38": {
+      "district_id": 38,
+      "district": "Manang",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.1800000000000002,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "39": {
+      "district_id": 39,
+      "district": "Kaski",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 5.938095238095238,
+        "bipad_1h_mm": 0.4,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "40": {
+      "district_id": 40,
+      "district": "Tanahu",
+      "risk": {
+        "score": 8,
+        "raw_score": 8,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 18.69375,
+        "bipad_1h_mm": 3.466666666666667,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.02292975,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.02292975,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        },
+        {
+          "type": "nasa_6h_rainfall",
+          "value_mm": 18.69375,
+          "points": 8
+        }
+      ]
+    },
+    "41": {
+      "district_id": 41,
+      "district": "Syangja",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 3.1222222222222222,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "42": {
+      "district_id": 42,
+      "district": "Parbat",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.6333333333333335,
+        "bipad_1h_mm": 0.2,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "43": {
+      "district_id": 43,
+      "district": "Baglung",
+      "risk": {
+        "score": 8,
+        "raw_score": 8,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.7000000000000001,
+        "bipad_1h_mm": 11.899999999999999,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        },
+        {
+          "type": "bipad_1h_rainfall",
+          "value_mm": 11.899999999999999,
+          "points": 8
+        }
+      ]
+    },
+    "44": {
+      "district_id": 44,
+      "district": "Myagdi",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "MODERATE",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.6590909090909092,
+        "bipad_1h_mm": 3.9333333333333336,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "45": {
+      "district_id": 45,
+      "district": "Mustang",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.7533333333333334,
+        "bipad_1h_mm": 5.6000000000000005,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "46": {
+      "district_id": 46,
+      "district": "Nawalparasi East",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 6.3,
+        "bipad_1h_mm": 4.949999999999999,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "47": {
+      "district_id": 47,
+      "district": "Palpa",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "STABLE",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.35,
+        "bipad_1h_mm": 2.8857142857142857,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "48": {
+      "district_id": 48,
+      "district": "Nawalparasi West",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.14285714285714288,
+        "bipad_1h_mm": 1.0,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "49": {
+      "district_id": 49,
+      "district": "Rupandehi",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.07692307692307693,
+        "bipad_1h_mm": 3.1,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "50": {
+      "district_id": 50,
+      "district": "Kapilbastu",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.16875,
+        "bipad_1h_mm": 8.9,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "51": {
+      "district_id": 51,
+      "district": "Arghakhanchi",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.1600000000000001,
+        "bipad_1h_mm": 1.7999999999999998,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "52": {
+      "district_id": 52,
+      "district": "Gulmi",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.13333333333333333,
+        "bipad_1h_mm": 5.0,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "53": {
+      "district_id": 53,
+      "district": "Rukum East",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 2.2066666666666666,
+        "bipad_1h_mm": 0.8,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "54": {
+      "district_id": 54,
+      "district": "Rolpa",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.06875,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "55": {
+      "district_id": 55,
+      "district": "Pyuthan",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "STABLE",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.2,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "56": {
+      "district_id": 56,
+      "district": "Dang",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.3576923076923077,
+        "bipad_1h_mm": 5.0,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "57": {
+      "district_id": 57,
+      "district": "Banke",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.005263157894736842,
+        "bipad_1h_mm": 2.9799999999999995,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "58": {
+      "district_id": 58,
+      "district": "Bardiya",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.14444444444444446,
+        "bipad_1h_mm": 1.3599999999999999,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "59": {
+      "district_id": 59,
+      "district": "Rukum West",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 5.158333333333333,
+        "bipad_1h_mm": 0.7607499999999999,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "60": {
+      "district_id": 60,
+      "district": "Salyan",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.022222222222222223,
+        "bipad_1h_mm": 2.9000000000000004,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "61": {
+      "district_id": 61,
+      "district": "Surkhet",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.047619047619047616,
+        "bipad_1h_mm": 2.0666666666666664,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "62": {
+      "district_id": 62,
+      "district": "Jajarkot",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 2.505,
+        "bipad_1h_mm": 0.2,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "63": {
+      "district_id": 63,
+      "district": "Dailekh",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.21333333333333337,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "64": {
+      "district_id": 64,
+      "district": "Dolpa",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 3.9753246753246754,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "65": {
+      "district_id": 65,
+      "district": "Jumla",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 6.558333333333334,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "66": {
+      "district_id": 66,
+      "district": "Kalikot",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 2.4615384615384617,
+        "bipad_1h_mm": 0.2,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "67": {
+      "district_id": 67,
+      "district": "Mugu",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 6.7870967741935475,
+        "bipad_1h_mm": 0.2,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "68": {
+      "district_id": 68,
+      "district": "Humla",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.6929824561403509,
+        "bipad_1h_mm": 8.1,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "69": {
+      "district_id": 69,
+      "district": "Bajhang",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "MODERATE",
+        "forecast_runoff": "LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.21764705882352944,
+        "bipad_1h_mm": 0.6,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "70": {
+      "district_id": 70,
+      "district": "Bajura",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 3.119047619047619,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "71": {
+      "district_id": 71,
+      "district": "Achham",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.23750000000000002,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "72": {
+      "district_id": 72,
+      "district": "Doti",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 1.0055555555555555,
+        "bipad_1h_mm": 0.2,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "73": {
+      "district_id": 73,
+      "district": "Kailali",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.4967741935483871,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "74": {
+      "district_id": 74,
+      "district": "Kanchanpur",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.02666666666666667,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "75": {
+      "district_id": 75,
+      "district": "Dadeldhura",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "RISING",
+        "outlook": "ELEVATED",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.5666666666666667,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "76": {
+      "district_id": 76,
+      "district": "Baitadi",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.20714285714285716,
+        "bipad_1h_mm": null,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    },
+    "77": {
+      "district_id": 77,
+      "district": "Darchula",
+      "risk": {
+        "score": 0,
+        "raw_score": 0,
+        "level": "LOW",
+        "confidence": "LOW",
+        "confidence_score": 0
+      },
+      "future": {
+        "forecast_rainfall": "LOW",
+        "forecast_runoff": "VERY_LOW",
+        "geoglows": "NO_DATA",
+        "outlook": "NORMAL",
+        "evidence_available": true
+      },
+      "rainfall": {
+        "nasa_6h_mm": 0.145,
+        "bipad_1h_mm": 0.2,
+        "nasa_role": "Primary rainfall input for SCS-CN runoff.",
+        "bipad_role": "Local rainfall observation evidence."
+      },
+      "runoff": {
+        "runoff_depth_Q_mm": 0.0,
+        "runoff_class": "NEGLIGIBLE RUNOFF",
+        "source": "prava_runoff_data.json"
+      },
+      "river": {
+        "danger_stations": 0,
+        "warning_stations": 0,
+        "rising_stations": 0,
+        "source": "BIPAD river observations"
+      },
+      "evidence": [
+        {
+          "type": "runoff",
+          "value_mm": 0.0,
+          "class": "NEGLIGIBLE RUNOFF",
+          "points": 0
+        }
+      ]
+    }
+  }
+}

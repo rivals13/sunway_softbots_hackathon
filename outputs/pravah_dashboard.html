@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>PRAVAH Intelligence</title>
+
+<link
+    rel="stylesheet"
+    href="../../src/mapping/vendor/leaflet/leaflet.css"
+/>
+
+<style>
+
+/* ============================================================
+   PRAVAH INTELLIGENCE UI
+   ============================================================ */
+
+:root {
+    --bg: #eef1f2;
+    --panel: #ffffff;
+    --panel-soft: #f6f8f8;
+    --border: #d5dcdf;
+    --text: #263238;
+    --muted: #69777d;
+    --dark: #172126;
+    --accent: #176b73;
+    --accent-soft: #e4f0f1;
+
+    --low: #2e7d32;
+    --watch: #ef9f1c;
+    --warning: #d85b32;
+    --critical: #b83232;
+
+    --shadow: 0 3px 14px rgba(26, 39, 44, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: var(--bg);
+    color: var(--text);
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+#map {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #e7ecee, #dce4e6);
+}
+
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+
+.topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 58px;
+    z-index: 3000;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 18px;
+    background: rgba(255,255,255,0.97);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-mark {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    background: var(--dark);
+    color: white;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.brand-name {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.brand-sub {
+    margin-top: 1px;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+}
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.live-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    color: #3d5a5e;
+}
+
+.live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #3f8a52;
+    box-shadow: 0 0 0 3px rgba(63,138,82,0.12);
+}
+
+
+/* ============================================================
+   LEFT GIS CONTROL
+   ============================================================ */
+
+.left-panel {
+    position: absolute;
+    z-index: 2500;
+    top: 72px;
+    left: 14px;
+
+    width: 205px;
+    max-height: calc(100vh - 88px);
+    overflow-y: auto;
+
+    background: rgba(255,255,255,0.97);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.panel-header {
+    padding: 12px 13px 9px;
+    border-bottom: 1px solid var(--border);
+}
+
+.panel-kicker {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    color: var(--muted);
+    font-weight: 800;
+}
+
+.panel-title {
+    margin-top: 3px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.layer-group {
+    padding: 9px 12px;
+}
+
+.layer-title {
+    margin-bottom: 7px;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    font-weight: 800;
+}
+
+.layer-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 30px;
+    font-size: 10px;
+    color: #425158;
+}
+
+.layer-row input {
+    accent-color: var(--accent);
+}
+
+.layer-row label {
+    flex: 1;
+    cursor: pointer;
+}
+
+.layer-note {
+    font-size: 8px;
+    color: #8a969b;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+.legend-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 26px;
+    font-size: 10px;
+}
+
+.legend-icon-badge {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ============================================================
+   RIGHT INTELLIGENCE PANEL
+   ============================================================ */
+
+.intelligence {
+    position: absolute;
+    z-index: 2500;
+    top: 72px;
+    right: 14px;
+    bottom: 14px;
+
+    width: 365px;
+    display: flex;
+    flex-direction: column;
+
+    background: rgba(255,255,255,0.98);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    box-shadow: 0 5px 22px rgba(26,39,44,0.16);
+    overflow: hidden;
+}
+
+.intelligence-head {
+    padding: 13px 15px;
+    background: linear-gradient(180deg, #ffffff, #f7f9f9);
+    border-bottom: 1px solid var(--border);
+}
+
+.intelligence-label {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--accent);
+    font-weight: 900;
+}
+
+.intelligence-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.intelligence-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--dark);
+}
+
+.risk-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.intelligence-subtitle {
+    margin-top: 3px;
+    font-size: 9px;
+    color: var(--muted);
+}
+
+.intelligence-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px;
+}
+
+
+/* ============================================================
+   EMPTY STATE & CARDS
+   ============================================================ */
+
+.agent-empty {
+    padding: 26px 12px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.agent-orb {
+    width: 46px;
+    height: 46px;
+    margin: 4px auto 12px;
+    border-radius: 50%;
+    border: 1px solid #b9cdd0;
+    background: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-weight: 900;
+    font-size: 11px;
+}
+
+.agent-empty h3 {
+    margin: 0 0 6px;
+    font-size: 13px;
+    color: var(--dark);
+}
+
+.agent-empty p {
+    margin: 0 auto;
+    max-width: 250px;
+    font-size: 10px;
+    line-height: 1.55;
+}
+
+.agent-section {
+    margin-bottom: 13px;
+}
+
+.agent-section-title {
+    margin-bottom: 7px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 9px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #536168;
+}
+
+.agent-section-title::before {
+    content: "";
+    width: 3px;
+    height: 12px;
+    border-radius: 2px;
+    background: var(--accent);
+}
+
+.reasoning-card {
+    padding: 10px 11px;
+    background: #f5f8f8;
+    border: 1px solid #dce4e5;
+    border-radius: 6px;
+    font-size: 10px;
+    line-height: 1.55;
+}
+
+.reasoning-card strong {
+    color: var(--dark);
+}
+
+.evidence-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.evidence-card {
+    padding: 8px;
+    background: #f8fafb;
+    border: 1px solid #e0e5e7;
+    border-radius: 5px;
+}
+
+.evidence-label {
+    font-size: 8px;
+    text-transform: uppercase;
+    color: #78858a;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+}
+
+.evidence-value {
+    margin-top: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.evidence-small {
+    margin-top: 2px;
+    font-size: 8px;
+    color: var(--muted);
+}
+
+.driver-row {
+    display: flex;
+    gap: 8px;
+    padding: 7px 0;
+    border-bottom: 1px solid #edf0f1;
+    font-size: 9px;
+    line-height: 1.45;
+}
+
+.driver-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 8px;
+    font-weight: 900;
+}
+
+
+/* ============================================================
+   ML / CHAT / TOOLBAR
+   ============================================================ */
+
+.ml-box {
+    padding: 10px;
+    border: 1px solid #d8e2e3;
+    background: #f7faf9;
+    border-radius: 6px;
+}
+
+.ml-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ml-name {
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.ml-tag {
+    font-size: 7px;
+    text-transform: uppercase;
+    padding: 3px 5px;
+    border-radius: 3px;
+    background: #e6eef0;
+    color: #52676c;
+    font-weight: 800;
+}
+
+.ml-description {
+    margin-top: 6px;
+    font-size: 8px;
+    line-height: 1.45;
+    color: var(--muted);
+}
+
+.agent-chat {
+    border-top: 1px solid var(--border);
+    padding: 10px;
+    background: #fafbfb;
+}
+
+.chat-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 7px;
+    font-size: 8px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    font-weight: 800;
+}
+
+.chat-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+.chat-row {
+    display: flex;
+    gap: 6px;
+}
+
+.chat-input {
+    flex: 1;
+    min-width: 0;
+    height: 34px;
+    border: 1px solid #ccd5d8;
+    border-radius: 5px;
+    padding: 0 9px;
+    outline: none;
+    background: white;
+    font-size: 10px;
+}
+
+.chat-input:focus {
+    border-color: #7aa8ac;
+    box-shadow: 0 0 0 2px rgba(23,107,115,0.08);
+}
+
+.chat-button {
+    width: 34px;
+    border: 0;
+    border-radius: 5px;
+    background: var(--dark);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.chat-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 7px;
+}
+
+.chat-suggestion {
+    border: 1px solid #d5dddf;
+    background: white;
+    color: #526168;
+    border-radius: 4px;
+    padding: 5px 7px;
+    font-size: 8px;
+}
+
+.chat-message {
+    margin-bottom: 7px;
+    padding: 7px 8px;
+    border-radius: 5px;
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+.chat-user {
+    background: #edf3f4;
+    color: #40565b;
+}
+
+.chat-agent {
+    background: #f4f7f7;
+    border-left: 3px solid var(--accent);
+    color: #33464b;
+}
+
+.map-toolbar {
+    position: absolute;
+    z-index: 2200;
+    bottom: 16px;
+    left: 230px;
+    display: flex;
+    gap: 5px;
+}
+
+.map-tool {
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid #cfd7d9;
+    border-radius: 5px;
+    background: rgba(255,255,255,0.96);
+    color: #44545a;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    font-size: 9px;
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   CUSTOM MARKERS & ANIMATED SVG RISK ICONS
+   ============================================================ */
+
+.custom-svg-marker {
+    background: transparent;
+    border: none;
+}
+
+/* Rain animation */
+@keyframes rainDropPulse {
+    0% { transform: translateY(0); opacity: 0.9; }
+    50% { transform: translateY(1.5px); opacity: 0.4; }
+    100% { transform: translateY(0); opacity: 0.9; }
+}
+
+.anim-rain-drop {
+    animation: rainDropPulse 1.4s ease-in-out infinite;
+}
+
+/* River wave animation */
+@keyframes riverWaveMove {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(1.5px); }
+    100% { transform: translateX(0); }
+}
+
+.anim-river-wave {
+    animation: riverWaveMove 2s ease-in-out infinite;
+}
+
+/* Animated Alert Shield & Pulse Keyframes */
+@keyframes criticalPulse {
+    0% {
+        transform: scale(0.92);
+        filter: drop-shadow(0 0 2px rgba(184, 50, 50, 0.8));
+    }
+    50% {
+        transform: scale(1.12);
+        filter: drop-shadow(0 0 8px rgba(184, 50, 50, 0.95));
+    }
+    100% {
+        transform: scale(0.92);
+        filter: drop-shadow(0 0 2px rgba(184, 50, 50, 0.8));
+    }
+}
+
+@keyframes warningPulse {
+    0% {
+        transform: scale(0.95);
+        filter: drop-shadow(0 0 2px rgba(216, 91, 50, 0.7));
+    }
+    50% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 6px rgba(216, 91, 50, 0.85));
+    }
+    100% {
+        transform: scale(0.95);
+        filter: drop-shadow(0 0 2px rgba(216, 91, 50, 0.7));
+    }
+}
+
+@keyframes watchPulse {
+    0% { transform: scale(0.97); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(0.97); }
+}
+
+.risk-icon-critical {
+    animation: criticalPulse 1.2s infinite ease-in-out;
+}
+
+.risk-icon-warning {
+    animation: warningPulse 1.8s infinite ease-in-out;
+}
+
+.risk-icon-watch {
+    animation: watchPulse 2.5s infinite ease-in-out;
+}
+
+.risk-icon-low {
+    opacity: 0.9;
+}
+
+
+/* ============================================================
+   LEAFLET OVERRIDES & RESPONSIVE
+   ============================================================ */
+
+.leaflet-control-zoom {
+    margin-top: 72px !important;
+    margin-left: 225px !important;
+}
+
+.leaflet-control-attribution {
+    font-size: 7px;
+}
+
+@media (max-width: 900px) {
+    .intelligence { width: 320px; }
+    .left-panel { width: 175px; }
+    .map-toolbar { left: 195px; }
+}
+
+@media (max-width: 700px) {
+    .left-panel { display: none; }
+    .intelligence {
+        top: auto;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        width: auto;
+        height: 43%;
+    }
+    .leaflet-control-zoom {
+        margin-left: 8px !important;
+        margin-top: 68px !important;
+    }
+    .map-toolbar { display: none; }
+    .system-status { display: none; }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ============================================================
+     MAP
+     ============================================================ -->
+
+<div id="map"></div>
+
+
+<!-- ============================================================
+     TOP BAR
+     ============================================================ -->
+
+<header class="topbar">
+
+    <div class="brand">
+        <div class="brand-mark">P</div>
+        <div>
+            <div class="brand-name">PRAVAH</div>
+            <div class="brand-sub">FLOOD INTELLIGENCE &amp; DECISION SUPPORT</div>
+        </div>
+    </div>
+
+    <div class="system-status">
+        <div class="live-status">
+            <span class="live-dot"></span>
+            MONITORING
+        </div>
+        <span>77 DISTRICTS</span>
+        <span id="selectedStatus">NO DISTRICT SELECTED</span>
+    </div>
+
+</header>
+
+
+<!-- ============================================================
+     LEFT GIS PANEL
+     ============================================================ -->
+
+<aside class="left-panel">
+
+    <div class="panel-header">
+        <div class="panel-kicker">Spatial intelligence</div>
+        <div class="panel-title">Map Layers</div>
+    </div>
+
+    <div class="layer-group">
+        <div class="layer-title">Risk</div>
+
+        <div class="layer-row">
+            <input id="layerRisk" type="checkbox" checked>
+            <label for="layerRisk">Current PRAVAH Risk</label>
+        </div>
+
+        <div class="layer-row">
+            <input id="layerPressure" type="checkbox" checked>
+            <label for="layerPressure">Flood Pressure</label>
+        </div>
+
+        <div class="layer-row">
+            <input id="layerFuture" type="checkbox">
+            <label for="layerFuture">Future Outlook</label>
+        </div>
+    </div>
+
+    <div class="layer-group">
+        <div class="layer-title">Evidence</div>
+
+        <div class="layer-row">
+            <input id="layerRain" type="checkbox" checked>
+            <label for="layerRain">Rain Gauges</label>
+        </div>
+
+        <div class="layer-row">
+            <input id="layerRiver" type="checkbox" checked>
+            <label for="layerRiver">River Stations</label>
+        </div>
+
+        <div class="layer-row">
+            <input id="layerCorridor" type="checkbox">
+            <label for="layerCorridor">River Influence</label>
+        </div>
+
+        <div class="layer-row">
+            <input id="layerDrainage" type="checkbox">
+            <label for="layerDrainage">Terrain Drainage</label>
+        </div>
+    </div>
+
+    <div class="layer-group">
+        <div class="layer-title">Risk legend</div>
+
+        <div class="legend-row">
+            <span class="legend-icon-badge" id="legendLow"></span>
+            <span>LOW</span>
+        </div>
+
+        <div class="legend-row">
+            <span class="legend-icon-badge" id="legendWatch"></span>
+            <span>WATCH</span>
+        </div>
+
+        <div class="legend-row">
+            <span class="legend-icon-badge" id="legendWarning"></span>
+            <span>WARNING</span>
+        </div>
+
+        <div class="legend-row">
+            <span class="legend-icon-badge" id="legendCritical"></span>
+            <span>CRITICAL</span>
+        </div>
+
+        <div class="layer-note">
+            District polygons and dynamic risk icons represent current PRAVAH states.
+        </div>
+    </div>
+
+</aside>
+
+
+<!-- ============================================================
+     INTELLIGENCE PANEL
+     ============================================================ -->
+
+<aside class="intelligence" id="intelligencePanel">
+
+    <div class="intelligence-head">
+        <div class="intelligence-label">PRAVAH Intelligence Agent</div>
+        <div class="intelligence-title-row">
+            <div class="intelligence-title" id="districtTitle">Select a district</div>
+            <div class="risk-badge" id="districtRiskBadge" style="background:#78909c">
+                <span id="districtRiskBadgeIcon"></span>
+                <span id="districtRiskBadgeText">READY</span>
+            </div>
+        </div>
+        <div class="intelligence-subtitle" id="districtSubtitle">
+            Click any district polygon to inspect evidence and PRAVAH reasoning.
+        </div>
+    </div>
+
+    <div class="intelligence-body" id="intelligenceBody">
+        <div class="agent-empty">
+            <div class="agent-orb">AI</div>
+            <h3>PRAVAH is ready</h3>
+            <p>
+                Select a district. The agent will combine rainfall, runoff, river conditions, forecasts, satellite evidence and learned patterns into an explainable risk assessment.
+            </p>
+        </div>
+    </div>
+
+    <div class="agent-chat">
+        <div class="chat-status">
+            <span class="chat-status-dot"></span>
+            Evidence-grounded reasoning
+        </div>
+
+        <div id="chatMessages"></div>
+
+        <div class="chat-row">
+            <input id="chatInput" class="chat-input" placeholder="Ask PRAVAH about the selected district...">
+            <button id="chatSend" class="chat-button" type="button">→</button>
+        </div>
+
+        <div class="chat-suggestions">
+            <button class="chat-suggestion" type="button" data-question="Why is this district at its current risk?">Why this risk?</button>
+            <button class="chat-suggestion" type="button" data-question="What evidence supports this assessment?">Show evidence</button>
+            <button class="chat-suggestion" type="button" data-question="What could happen next?">What happens next?</button>
+        </div>
+    </div>
+
+</aside>
+
+
+<!-- ============================================================
+     MAP TOOLBAR
+     ============================================================ -->
+
+<div class="map-toolbar">
+    <button class="map-tool" id="fitNepal" type="button">Nepal</button>
+    <button class="map-tool" id="clearSelection" type="button">Clear selection</button>
+</div>
+
+
+<script src="../../src/mapping/vendor/leaflet/leaflet.js"></script>
+<script src="../../src/mapping/vendor/leaflet/turf.min.js"></script>
+
+
+<script>
+
+/* ============================================================
+   DATA
+   ============================================================ */
+
+const districtData = {
+    "type": "FeatureCollection",
+    "name": "npl_admin2",
+    "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "adm2_name": "Taplejung",
+                "adm2_pcode": "NP0101",
+                "adm1_name": "Koshi",
+                "adm1_pcode": "NP01",
+                "center_lat": 27.6104625,
+                "center_lon": 87.8215419,
+                "pravah_district_id": 1,
+                "pravah_district_name": "Taplejung",
+                "pravah_risk": "LOW",
+                "pravah_score": 14.8,
+                "pravah_severity": "NORMAL",
+                "pravah_drivers": ["VIIRS observed strong flood evidence in the latest satellite observation"],
+                "pravah_confidence": "HIGH",
+                "pravah_confidence_score": 0.7,
+                "evidence_rainfall": "LOW",
+                "evidence_runoff": "VERY_LOW",
+                "evidence_river": "NORMAL",
+                "evidence_antecedent": "VERY_LOW",
+                "evidence_eo": "STRONG",
+                "evidence_dominant_signal": "VIIRS_EO",
+                "evidence_agreement": "HIGH",
+                "rain_1h_mm": 0.0,
+                "rain_6h_mm": 0.071875,
+                "rain_12h_mm": 0.184375,
+                "rain_24h_mm": 4.03125,
+                "rain_3day_mm": 10.18125,
+                "rain_5day_mm": 23.225,
+                "rainfall_intensity": 0.012,
+                "rainfall_intensity_class": "LOW",
+                "rainfall_persistence": 0.218,
+                "antecedent_rainfall": 15.399,
+                "scs_cn_runoff_6h_mm": 0.0,
+                "runoff_mm": null,
+                "river_station_count": 2,
+                "river_max_water_level_m": 3.579,
+                "river_warning_utilization": 0.5506,
+                "river_danger_utilization": 0.4772,
+                "river_warning_stations": 0,
+                "river_danger_stations": 0,
+                "river_rising_stations": 0,
+                "river_status": "NORMAL",
+                "river_trend": null,
+                "forecast_runoff_6h": null,
+                "forecast_runoff_12h": null,
+                "forecast_runoff_24h": null,
+                "forecast_runoff_48h": null,
+                "geoglows_station_count": 0,
+                "geoglows_current_flow": null,
+                "geoglows_peak_flow": null,
+                "geoglows_forecast_rise": null,
+                "geoglows_hours_to_peak": null,
+                "geoglows_peak_time": null,
+                "eo_available": true,
+                "eo_observation_date": "2026-09-19",
+                "eo_source": "VIIRS/JPSS1+JPSS2 Daily L3 Global Flood Composite NRT",
+                "eo_resolution": "250m",
+                "eo_flood_pixels": 802,
+                "eo_flood_ratio_pct": 1.224,
+                "eo_score": 86.82,
+                "eo_temporal_role": "LAGGED_OBSERVATION",
+                "future_outlook": "NORMAL",
+                "future_evidence_available": true,
+                "hydrology_state": "NORMAL",
+                "hydrology_signal": 0.089,
+                "hydrology_strength": "WEAK",
+                "data_quality": "GOOD",
+                "rainfall_available": true,
+                "river_available": true,
+                "forecast_available": true,
+                "geoglows_available": false,
+                "eo_data_available": true,
+                "pressure_index": 23.7,
+                "pressure_level": "LOW",
+                "pressure_model": "PRAVAH Composite Flood Pressure Index v1"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[87.8340, 27.9515], [87.8334, 27.9519], [87.8250, 27.9209], [87.8100, 27.9186], [87.7500, 27.8352], [87.6800, 27.8099], [87.8340, 27.9515]]]
+            }
+        }
+    ]
+};
+
+/* ============================================================
+   COLOR & RISK HELPERS
+   ============================================================ */
+
+const RISK_COLORS = {
+    'LOW': '#2e7d32',
+    'WATCH': '#ef9f1c',
+    'WARNING': '#d85b32',
+    'CRITICAL': '#b83232'
+};
+
+function getRiskColor(risk) {
+    return RISK_COLORS[risk] || '#78909c';
+}
+
+function createRiskIconSvg(risk) {
+    const color = getRiskColor(risk);
+    const animClass = `risk-icon-${risk.toLowerCase()}`;
+    return `<svg class="${animClass}" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V7l-9-5z" fill="${color}" opacity="0.85"/>
+        <path d="M12 4L5 8v5c0 4.42 3.06 8.56 7 9.56 3.94-1 7-5.14 7-9.56V8l-7-4z" fill="${color}"/>
+        <circle cx="12" cy="12" r="3" fill="#ffffff"/>
+    </svg>`;
+}
+
+/* ============================================================
+   MAP INITIALIZATION & LAYERS
+   ============================================================ */
+
+const map = L.map('map', {
+    zoomControl: true,
+    attributionControl: true
+}).setView([27.6104625, 87.8215419], 9);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+let selectedFeature = null;
+let geojsonLayer = null;
+let markerLayerGroup = L.layerGroup().addTo(map);
+
+function styleFeature(feature) {
+    const risk = feature.properties.pravah_risk || 'LOW';
+    return {
+        fillColor: getRiskColor(risk),
+        weight: 2,
+        opacity: 0.9,
+        color: '#263238',
+        fillOpacity: 0.4
+    };
+}
+
+function highlightFeature(e) {
+    const layer = e.target;
+    layer.setStyle({
+        weight: 3,
+        color: '#176b73',
+        fillOpacity: 0.65
+    });
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+}
+
+function resetHighlight(e) {
+    if (selectedFeature && e.target.feature.properties.adm2_pcode === selectedFeature.properties.adm2_pcode) {
+        return;
+    }
+    geojsonLayer.resetStyle(e.target);
+}
+
+function onFeatureClick(e) {
+    const layer = e.target;
+    selectedFeature = layer.feature;
+    
+    geojsonLayer.eachLayer(l => geojsonLayer.resetStyle(l));
+    layer.setStyle({
+        weight: 3,
+        color: '#172126',
+        fillOpacity: 0.75
+    });
+
+    renderIntelligence(selectedFeature.properties);
+}
+
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: onFeatureClick
+    });
+
+    // Add Risk Marker Icon at Center
+    if (feature.properties.center_lat && feature.properties.center_lon) {
+        const iconSvg = createRiskIconSvg(feature.properties.pravah_risk || 'LOW');
+        const customIcon = L.divIcon({
+            className: 'custom-svg-marker',
+            html: iconSvg,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+        });
+        L.marker([feature.properties.center_lat, feature.properties.center_lon], { icon: customIcon }).addTo(markerLayerGroup);
+    }
+}
+
+geojsonLayer = L.geoJSON(districtData, {
+    style: styleFeature,
+    onEachFeature: onEachFeature
+}).addTo(map);
+
+/* Set Dynamic Legend Items */
+document.getElementById('legendLow').innerHTML = createRiskIconSvg('LOW');
+document.getElementById('legendWatch').innerHTML = createRiskIconSvg('WATCH');
+document.getElementById('legendWarning').innerHTML = createRiskIconSvg('WARNING');
+document.getElementById('legendCritical').innerHTML = createRiskIconSvg('CRITICAL');
+
+/* ============================================================
+   INTELLIGENCE PANEL RENDERER
+   ============================================================ */
+
+function renderIntelligence(props) {
+    const risk = props.pravah_risk || 'LOW';
+    const color = getRiskColor(risk);
+
+    document.getElementById('selectedStatus').innerText = props.adm2_name.toUpperCase();
+    document.getElementById('districtTitle').innerText = props.adm2_name;
+    
+    const badge = document.getElementById('districtRiskBadge');
+    badge.style.background = color;
+    document.getElementById('districtRiskBadgeIcon').innerHTML = createRiskIconSvg(risk);
+    document.getElementById('districtRiskBadgeText').innerText = risk;
+
+    document.getElementById('districtSubtitle').innerText = `Province: ${props.adm1_name} | Score: ${props.pravah_score} | Confidence: ${props.pravah_confidence}`;
+
+    const driversList = (props.pravah_drivers || []).map(d => `
+        <div class="driver-row">
+            <div class="driver-icon">i</div>
+            <div>${d}</div>
+        </div>
+    `).join('');
+
+    const html = `
+        <div class="agent-section">
+            <div class="agent-section-title">Risk Assessment</div>
+            <div class="reasoning-card">
+                <strong>Status:</strong> ${props.pravah_severity} | <strong>Pressure:</strong> ${props.pressure_level} (${props.pressure_index})<br>
+                <strong>Dominant Signal:</strong> ${props.evidence_dominant_signal} (${props.evidence_agreement} agreement)
+            </div>
+        </div>
+
+        <div class="agent-section">
+            <div class="agent-section-title">Key Drivers</div>
+            ${driversList || '<div class="reasoning-card">No prominent risk drivers identified.</div>'}
+        </div>
+
+        <div class="agent-section">
+            <div class="agent-section-title">Evidence &amp; Metrics</div>
+            <div class="evidence-grid">
+                <div class="evidence-card">
+                    <div class="evidence-label">Rainfall (24h)</div>
+                    <div class="evidence-value">${props.rain_24h_mm} mm</div>
+                    <div class="evidence-small">Class: ${props.rainfall_intensity_class}</div>
+                </div>
+                <div class="evidence-card">
+                    <div class="evidence-label">River Status</div>
+                    <div class="evidence-value">${props.river_status}</div>
+                    <div class="evidence-small">Max Level: ${props.river_max_water_level_m}m</div>
+                </div>
+                <div class="evidence-card">
+                    <div class="evidence-label">Earth Observation</div>
+                    <div class="evidence-value">${props.eo_flood_pixels} px</div>
+                    <div class="evidence-small">${props.eo_source ? props.eo_source.split(' ')[0] : 'N/A'}</div>
+                </div>
+                <div class="evidence-card">
+                    <div class="evidence-label">Future Outlook</div>
+                    <div class="evidence-value">${props.future_outlook}</div>
+                    <div class="evidence-small">Hydrology: ${props.hydrology_state}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="agent-section">
+            <div class="agent-section-title">Model Specifications</div>
+            <div class="ml-box">
+                <div class="ml-header">
+                    <span class="ml-name">PRAVAH Composite Model</span>
+                    <span class="ml-tag">v1 Active</span>
+                </div>
+                <div class="ml-description">
+                    ${props.pressure_model}<br>
+                    Data Quality: ${props.data_quality}
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.getElementById('intelligenceBody').innerHTML = html;
+}
+
+/* ============================================================
+   CHAT INTERACTIONS & CONTROLS
+   ============================================================ */
+
+function addChatMessage(role, text) {
+    const container = document.getElementById('chatMessages');
+    const msg = document.createElement('div');
+    msg.className = `chat-message chat-${role}`;
+    msg.innerText = text;
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
+}
+
+function handleChatSubmit() {
+    const input = document.getElementById('chatInput');
+    const query = input.value.trim();
+    if (!query) return;
+
+    addChatMessage('user', query);
+    input.value = '';
+
+    setTimeout(() => {
+        if (!selectedFeature) {
+            addChatMessage('agent', 'Please select a district on the map first so I can analyze its parameters.');
+            return;
+        }
+        const p = selectedFeature.properties;
+        let response = `For ${p.adm2_name}, the current flood risk is ${p.pravah_risk}. `;
+        if (query.toLowerCase().includes('why')) {
+            response += `The primary driver is: ${p.pravah_drivers[0] || 'low overall hydrometeorological activity'}. Total 24h rain is ${p.rain_24h_mm} mm.`;
+        } else if (query.toLowerCase().includes('evidence')) {
+            response += `Satellite EO detected ${p.eo_flood_pixels} flood pixels (${p.eo_flood_ratio_pct}% ratio). River station status is ${p.river_status}.`;
+        } else {
+            response += `Future outlook is ${p.future_outlook} with a pressure index of ${p.pressure_index}.`;
+        }
+        addChatMessage('agent', response);
+    }, 400);
+}
+
+document.getElementById('chatSend').addEventListener('click', handleChatSubmit);
+document.getElementById('chatInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleChatSubmit();
+});
+
+document.querySelectorAll('.chat-suggestion').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const q = e.target.getAttribute('data-question');
+        document.getElementById('chatInput').value = q;
+        handleChatSubmit();
+    });
+});
+
+/* Map Control Toolbar Events */
+document.getElementById('fitNepal').addEventListener('click', () => {
+    map.fitBounds(geojsonLayer.getBounds());
+});
+
+document.getElementById('clearSelection').addEventListener('click', () => {
+    selectedFeature = null;
+    geojsonLayer.eachLayer(l => geojsonLayer.resetStyle(l));
+    document.getElementById('selectedStatus').innerText = 'NO DISTRICT SELECTED';
+    document.getElementById('districtTitle').innerText = 'Select a district';
+    document.getElementById('districtRiskBadge').style.background = '#78909c';
+    document.getElementById('districtRiskBadgeIcon').innerHTML = '';
+    document.getElementById('districtRiskBadgeText').innerText = 'READY';
+    document.getElementById('districtSubtitle').innerText = 'Click any district polygon to inspect evidence and PRAVAH reasoning.';
+    document.getElementById('intelligenceBody').innerHTML = `
+        <div class="agent-empty">
+            <div class="agent-orb">AI</div>
+            <h3>PRAVAH is ready</h3>
+            <p>
+                Select a district. The agent will combine rainfall, runoff, river conditions, forecasts, satellite evidence and learned patterns into an explainable risk assessment.
+            </p>
+        </div>
+    `;
+});
+
+// Auto Select First District on Load
+const firstLayer = geojsonLayer.getLayers()[0];
+if (firstLayer) {
+    firstLayer.fire('click');
+}
+
+</script>
+
+</body>
+
+</html>

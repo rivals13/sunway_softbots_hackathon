@@ -1,0 +1,64 @@
+1. Technology Stack & Tooling
+
+    Agent Orchestration & Core Logic: Python, LangChain/LlamaIndex (or native tool-calling loops) to manage the multi-hazard co-pilot workflow.
+
+    Ground Telemetry & Administration: BIPAD API (live rain, river stations, historical incidents, ward boundaries, and emergency contact lists).
+
+    Atmospheric & Soil Water Tracking: NASA GPM IMERG (satellite rainfall grids) + ERA5-Land via Google Earth Engine (volumetric soil water/moisture content).
+
+    Terrain & Geology Analysis: SRTM DEM (elevation and slope gradients) + NARC Soil API (soil.narc.gov.np/api/soildata) for local sand, silt, and clay percentages.
+
+    Post-Disaster Impact Mapping: Sentinel-1 SAR via Google Earth Engine (pre- and post-event radar backscatter comparison for flood/landslide footprint generation).
+
+2. Key Endpoints to Consume
+
+    BIPAD REST API:
+
+        /api/v1/rain/ & /api/v1/river/: Live numerical telemetry from physical gauges.
+
+        /api/v1/flood-station/ & /api/v1/river-stations/: Station metadata and threshold definitions.
+
+        /api/v1/incident/: Historical disaster data for vulnerability ranking.
+
+        /api/v1/ward/ & /api/v1/district/: Administrative geometry vectors.
+
+        /api/v1/municipality-contact/: Official emergency focal points and phone directories.
+
+    NARC Soil API:
+
+        domain/api/soildata?lat={lat}&lon={lon}: Queries exact coordinate-based soil composition (returning sand, silt, clay percentages, and parent soil type) to calculate water holding capacity.
+
+    Google Earth Engine (GEE) APIs:
+
+        NASA/GPM_L3/IMERG_V06: Hourly/half-hourly rainfall accumulation rasters.
+
+        ECMWF/ERA5_LAND/HOURLY: Volumetric soil water layers (0–7cm layer) to track live moisture accumulation.
+
+        USGS/SRTMGL1_003: 30-meter global elevation data to derive slope steepness.
+
+        COPERNICUS/S1_GRD: Synthetic Aperture Radar imagery for pre- and post-disaster change detection.
+
+3. Execution Strategy (The Agentic Workflow)
+
+    Pre-Event Phase (Baseline Setup):
+
+        When initialized or targeted at a specific location, the agent queries the NARC Soil API and SRTM DEM to cache local vulnerability baselines (slope steepness and soil saturation limits). It cross-references historical events using BIPAD /incident/.
+
+    Real-Time Event Watch (The Monitoring Loop):
+
+        The Python backend continuously ingests streaming data from BIPAD rain gauges and NASA GPM grids.
+
+        If rainfall rates spike, the agent pulls ERA5-Land volumetric soil moisture data to calculate how much water the land has absorbed relative to its NARC-defined threshold.
+
+    Multi-Hazard Trigger & Alert Generation:
+
+        If the soil moisture approaches critical capacity and SRTM data marks the terrain as a steep slope, the agent instantly classifies an imminent landslide or flood surge.
+
+        It maps the threat to the exact administrative boundary using BIPAD /ward/, looks up local responders via /municipality-contact/, and drafts a contextual emergency advisory.
+
+    Post-Event Verification:
+
+        Once the weather clears, the system queries Sentinel-1 SAR imagery via Google Earth Engine, compares pre- and post-storm surface signatures, and outputs a damage assessment report (SitRep) for municipal authorities.
+        
+        
+        

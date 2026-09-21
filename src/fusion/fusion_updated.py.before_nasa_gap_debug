@@ -1,0 +1,3522 @@
+#!/usr/bin/env python3
+
+"""
+PRAVAH - Aligned Rainfall Fusion Engine v4
+
+NASA IMERG Early Run
+        +
+BIPAD realtime rainfall stations
+        +
+BIPAD realtime river stations
+
+Important:
+- NASA rainfall = district spatial average.
+- BIPAD rainfall = local ground-station evidence.
+- BIPAD river = realtime ground observation evidence.
+- NASA and BIPAD rainfall remain separate.
+- Realtime BIPAD data comes from:
+      /rain-stations/?latest=true
+      /river-stations/?latest=true
+- Stale BIPAD observations are not used as current monitoring evidence.
+- River warning/danger thresholds are validated before use.
+- Missing NASA accumulation periods remain null, not zero.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import re
+import time
+from datetime import datetime, timedelta, timezone
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
+import requests
+from shapely.geometry import Point, shape
+from shapely.prepared import prep
+
+from src.config import GEOJSON_PATH, LIVE_FUSED_FILE
+
+
+# =============================================================================
+# CONFIG
+# =============================================================================
+
+BASE_URL = "https://bipadportal.gov.np/api/v1"
+
+BIPAD_DISTRICT_URL = f"{BASE_URL}/district/"
+
+# REALTIME ENDPOINTS
+BIPAD_RAIN_URL = f"{BASE_URL}/rain-stations/"
+BIPAD_RIVER_URL = f"{BASE_URL}/river-stations/"
+
+OUTPUT_PATH = LIVE_FUSED_FILE
+
+CURRENT_WINDOW_HOURS = 24
+NASA_HISTORY_HOURS = 168
+
+# BIPAD realtime observations older than this are not treated as
+# current monitoring evidence.
+BIPAD_FRESH_MINUTES = 180
+
+# NASA Early Run is naturally delayed by several hours.
+NASA_FRESH_MINUTES = 360
+
+REQUEST_TIMEOUT = 60
+MAX_RETRIES = 3
+
+# NASA credentials should be supplied through environment variables.
+NASA_USER = os.getenv("NASA_USER", "")
+NASA_PASS = os.getenv("NASA_PASS", "")
+
+NASA_BASE = (
+    "https://jsimpsonhttps.pps.eosdis.nasa.gov/"
+    "imerg/gis/early/{year:04d}/{month:02d}/"
+)
+
+
+# =============================================================================
+# BASIC HELPERS
+# =============================================================================
+
+def utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def parse_dt(value: Any) -> Optional[datetime]:
+    if value is None:
+        return None
+
+    text = str(value).strip()
+
+    if not text:
+        return None
+
+    if text.endswith("Z"):
+        text = text[:-1] + "+00:00"
+
+    try:
+        dt = datetime.fromisoformat(text)
+    except ValueError:
+        dt = None
+
+        for fmt in (
+            "%Y-%m-%dT%H:%M:%S.%f",
+            "%Y-%m-%dT%H:%M:%S",
+            "%Y-%m-%d %H:%M:%S",
+        ):
+            try:
+                dt = datetime.strptime(text, fmt)
+                break
+            except ValueError:
+                pass
+
+        if dt is None:
+            return None
+
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+
+    return dt.astimezone(timezone.utc)
+
+
+def iso(dt: Optional[datetime]) -> Optional[str]:
+    return dt.isoformat() if dt else None
+
+
+def normalize_name(value: Any) -> str:
+    if value is None:
+        return ""
+
+    s = str(value).strip().lower()
+
+    s = s.replace("district", "")
+    s = s.replace("-", " ")
+    s = s.replace("_", " ")
+
+    s = re.sub(r"[^a-z0-9 ]+", "", s)
+    s = re.sub(r"\s+", " ", s).strip()
+
+    aliases = {
+        "chitawan": "chitwan",
+        "tehrathum": "terhathum",
+        "terathum": "terhathum",
+        "sindhupalchowk": "sindhupalchok",
+        "dhanusha": "dhanusa",
+        "tanahun": "tanahu",
+        "kapilvastu": "kapilbastu",
+        "ktm": "kathmandu",
+        "kavre": "kavrepalanchok",
+        "kavrepalanchowk": "kavrepalanchok",
+        "rukumeast": "rukum east",
+        "rukum east": "rukum east",
+        "rukumwest": "rukum west",
+        "rukum west": "rukum west",
+        "nawalparasieast": "nawalparasi east",
+        "nawalparasi east": "nawalparasi east",
+        "nawalparasiwest": "nawalparasi west",
+        "nawalparasi west": "nawalparasi west",
+    }
+
+    return aliases.get(s, s)
+
+
+def safe_float(value: Any) -> Optional[float]:
+    if value is None or value == "":
+        return None
+
+    try:
+        x = float(value)
+
+        if np.isfinite(x):
+            return x
+
+        return None
+
+    except (TypeError, ValueError):
+        return None
+
+
+def get_json(
+    session: requests.Session,
+    url: str,
+    params: Optional[Dict[str, Any]] = None,
+    auth: Optional[Tuple[str, str]] = None,
+) -> Any:
+
+    last_error = None
+
+    for attempt in range(1, MAX_RETRIES + 1):
+
+        try:
+
+            response = session.get(
+                url,
+                params=params,
+                auth=auth,
+                timeout=REQUEST_TIMEOUT,
+            )
+
+            if response.status_code >= 400:
+
+                print(
+                    f"HTTP {response.status_code}: "
+                    f"{response.url}"
+                )
+
+                print(response.text[:500])
+
+            response.raise_for_status()
+
+            return response.json()
+
+        except Exception as exc:
+
+            last_error = exc
+
+            if attempt < MAX_RETRIES:
+
+                wait = 2 ** (attempt - 1)
+
+                print(
+                    f"Request failed "
+                    f"(attempt {attempt}/{MAX_RETRIES}): "
+                    f"{exc}"
+                )
+
+                print(
+                    f"Retrying in {wait}s..."
+                )
+
+                time.sleep(wait)
+
+    raise RuntimeError(
+        f"Request failed after "
+        f"{MAX_RETRIES} attempts: "
+        f"{last_error}"
+    )
+
+
+def records_from_payload(
+    payload: Any,
+) -> List[Dict[str, Any]]:
+
+    if isinstance(payload, list):
+        return [
+            x for x in payload
+            if isinstance(x, dict)
+        ]
+
+    if isinstance(payload, dict):
+
+        for key in (
+            "results",
+            "data",
+            "features",
+            "items",
+        ):
+
+            value = payload.get(key)
+
+            if isinstance(value, list):
+
+                return [
+                    x for x in value
+                    if isinstance(x, dict)
+                ]
+
+    return []
+
+
+# =============================================================================
+# PAGINATION
+# =============================================================================
+
+def fetch_all_pages(
+    session: requests.Session,
+    url: str,
+    params: Optional[Dict[str, Any]] = None,
+    auth: Optional[Tuple[str, str]] = None,
+    max_pages: int = 20,
+) -> List[Dict[str, Any]]:
+
+    base_params = dict(params or {})
+
+    all_records: List[Dict[str, Any]] = []
+
+    next_url = url
+    next_params = base_params
+
+    for page_number in range(1, max_pages + 1):
+
+        payload = get_json(
+            session,
+            next_url,
+            params=next_params,
+            auth=auth,
+        )
+
+        page_records = records_from_payload(payload)
+
+        all_records.extend(page_records)
+
+        if not isinstance(payload, dict):
+            break
+
+        next_link = payload.get("next")
+
+        if not next_link:
+            break
+
+        if not isinstance(next_link, str):
+            break
+
+        next_url = next_link
+
+        # The API's next URL already contains its query params.
+        next_params = None
+
+    return all_records
+
+
+# =============================================================================
+# GEOJSON
+# =============================================================================
+
+def load_geojson() -> Tuple[
+    List[Dict[str, Any]],
+    Dict[int, Dict[str, Any]]
+]:
+
+    print("Loading GeoJSON districts...")
+
+    with GEOJSON_PATH.open(
+        "r",
+        encoding="utf-8",
+    ) as f:
+
+        geo = json.load(f)
+
+    features = geo.get(
+        "features",
+        [],
+    )
+
+    districts = []
+    by_id = {}
+
+    next_district_id = 1
+
+    for feature in features:
+
+        props = feature.get(
+            "properties",
+            {},
+        )
+
+        geom = feature.get(
+            "geometry"
+        )
+
+        if not geom:
+            continue
+
+        name = (
+            props.get("adm2_name")
+            or props.get("NAME_2")
+            or props.get("name")
+            or f"District {next_district_id}"
+        )
+
+        pcode = (
+            props.get("adm2_pcode")
+            or props.get("GID_2")
+        )
+
+        district_id = next_district_id
+
+        next_district_id += 1
+
+        geom_shape = shape(geom)
+
+        record = {
+            "district_id": district_id,
+            "district": str(name),
+            "pcode": pcode,
+            "geometry": geom_shape,
+            "prepared": prep(geom_shape),
+        }
+
+        districts.append(record)
+
+        by_id[district_id] = record
+
+    print(
+        f"GeoJSON districts loaded: "
+        f"{len(districts)}"
+    )
+
+    return districts, by_id
+
+
+# =============================================================================
+# BIPAD DISTRICTS
+# =============================================================================
+
+def load_bipad_districts(
+    session: requests.Session,
+) -> Tuple[
+    Dict[int, Dict[str, Any]],
+    Dict[str, int]
+]:
+
+    print("\nFetching BIPAD districts...")
+
+    payload = get_json(
+        session,
+        BIPAD_DISTRICT_URL,
+        params={
+            "limit": 100
+        },
+    )
+
+    records = records_from_payload(
+        payload
+    )
+
+    by_id = {}
+    by_name = {}
+
+    for rec in records:
+
+        try:
+
+            district_id = int(
+                rec.get("id")
+            )
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+
+            continue
+
+        name = (
+            rec.get("title")
+            or rec.get("name")
+            or rec.get("district")
+        )
+
+        if not name:
+            continue
+
+        by_id[district_id] = rec
+
+        by_name[
+            normalize_name(name)
+        ] = district_id
+
+    print(
+        f"BIPAD districts loaded: "
+        f"{len(by_id)}"
+    )
+
+    return by_id, by_name
+
+
+# =============================================================================
+# GEOJSON → BIPAD DISTRICT MAPPING
+# =============================================================================
+
+def build_geo_to_bipad_mapping(
+    geo_districts: List[Dict[str, Any]],
+    bipad_by_id: Dict[int, Dict[str, Any]],
+    bipad_by_name: Dict[str, int],
+) -> Dict[int, int]:
+
+    print(
+        "\nMapping GeoJSON districts "
+        "to BIPAD district IDs..."
+    )
+
+    mapping = {}
+
+    for geo in geo_districts:
+
+        geo_id = geo["district_id"]
+
+        name = geo["district"]
+
+        if geo_id in bipad_by_id:
+
+            mapping[geo_id] = geo_id
+
+            continue
+
+        norm = normalize_name(name)
+
+        if norm in bipad_by_name:
+
+            mapping[geo_id] = (
+                bipad_by_name[norm]
+            )
+
+            continue
+
+        compact_geo = re.sub(
+            r"[^a-z0-9]",
+            "",
+            norm,
+        )
+
+        compact_matches = []
+
+        for (
+            bipad_name,
+            bipad_id,
+        ) in bipad_by_name.items():
+
+            compact_bipad = re.sub(
+                r"[^a-z0-9]",
+                "",
+                bipad_name,
+            )
+
+            if (
+                compact_geo
+                == compact_bipad
+            ):
+
+                compact_matches.append(
+                    bipad_id
+                )
+
+        if len(compact_matches) == 1:
+
+            mapping[geo_id] = (
+                compact_matches[0]
+            )
+
+    print(
+        f"Successfully mapped: "
+        f"{len(mapping)} / "
+        f"{len(geo_districts)}"
+    )
+
+    for geo in geo_districts:
+
+        if (
+            geo["district_id"]
+            not in mapping
+        ):
+
+            print(
+                "UNMAPPED DISTRICT: "
+                f"{geo['district']} | "
+                f"Geo ID "
+                f"{geo['district_id']}"
+            )
+
+    return mapping
+
+
+# =============================================================================
+# COORDINATES
+# =============================================================================
+
+def record_coordinates(
+    record: Dict[str, Any],
+) -> Optional[Tuple[float, float]]:
+
+    for container_key in (
+        "point",
+        "geometry",
+    ):
+
+        container = record.get(
+            container_key
+        )
+
+        if not isinstance(
+            container,
+            dict,
+        ):
+            continue
+
+        coords = container.get(
+            "coordinates"
+        )
+
+        if (
+            isinstance(
+                coords,
+                (list, tuple),
+            )
+            and len(coords) >= 2
+        ):
+
+            lon = safe_float(
+                coords[0]
+            )
+
+            lat = safe_float(
+                coords[1]
+            )
+
+            if (
+                lon is not None
+                and lat is not None
+            ):
+
+                return lon, lat
+
+    return None
+
+
+# =============================================================================
+# FRESHNESS
+# =============================================================================
+
+def get_age_minutes(
+    observed: Optional[datetime],
+    now: datetime,
+) -> Optional[float]:
+
+    if observed is None:
+        return None
+
+    return max(
+        0.0,
+        (
+            now - observed
+        ).total_seconds() / 60,
+    )
+
+
+def is_fresh(
+    observed: Optional[datetime],
+    now: datetime,
+    threshold_minutes: int,
+) -> bool:
+
+    age = get_age_minutes(
+        observed,
+        now,
+    )
+
+    if age is None:
+        return False
+
+    return age <= threshold_minutes
+
+
+def freshness_status(
+    observed: Optional[datetime],
+    now: datetime,
+    threshold_minutes: int,
+) -> Dict[str, Any]:
+
+    if observed is None:
+
+        return {
+            "observed_at_utc": None,
+            "age_minutes": None,
+            "status": "NO DATA",
+        }
+
+    age = get_age_minutes(
+        observed,
+        now,
+    )
+
+    if age is None:
+
+        return {
+            "observed_at_utc": iso(observed),
+            "age_minutes": None,
+            "status": "NO DATA",
+        }
+
+    if age <= threshold_minutes:
+
+        status = "FRESH"
+
+    else:
+
+        status = "STALE"
+
+    return {
+        "observed_at_utc": iso(observed),
+        "age_minutes": round(
+            age,
+            1,
+        ),
+        "status": status,
+    }
+
+
+# =============================================================================
+# BIPAD RAINFALL
+# =============================================================================
+
+def extract_rain_1h(
+    record: Dict[str, Any],
+) -> Optional[float]:
+
+    # Direct fields first.
+
+    for key in (
+        "rainfall",
+        "rain",
+        "rain_1h",
+        "rainfall1h",
+        "value",
+        "amount",
+        "precipitation",
+    ):
+
+        value = safe_float(
+            record.get(key)
+        )
+
+        if value is not None:
+            return value
+
+    # Some BIPAD payloads contain averages.
+
+    averages = record.get(
+        "averages"
+    )
+
+    if isinstance(
+        averages,
+        list,
+    ):
+
+        for avg in averages:
+
+            if not isinstance(
+                avg,
+                dict,
+            ):
+                continue
+
+            try:
+
+                interval = int(
+                    avg.get("interval")
+                )
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+
+                continue
+
+            if interval == 1:
+
+                for key in (
+                    "value",
+                    "average",
+                    "rainfall",
+                    "amount",
+                ):
+
+                    value = safe_float(
+                        avg.get(key)
+                    )
+
+                    if value is not None:
+                        return value
+
+    return None
+
+
+def extract_rain_time(
+    record: Dict[str, Any],
+) -> Optional[datetime]:
+
+    return parse_dt(
+        record.get("measuredOn")
+        or record.get("measured_on")
+        or record.get("observedAt")
+        or record.get("observed_at")
+        or record.get("time")
+        or record.get("rainfallOn")
+    )
+
+
+def fetch_bipad_rain(
+    session: requests.Session,
+    geo_districts: List[Dict[str, Any]],
+    bipad_by_id: Dict[int, Dict[str, Any]],
+    bipad_by_name: Dict[str, int],
+    now: datetime,
+) -> Tuple[
+    Dict[int, Dict[str, Any]],
+    Optional[datetime],
+    int,
+    int,
+    int,
+]:
+
+    print(
+        "\nFetching BIPAD REALTIME rainfall..."
+    )
+
+    params = {
+        "latest": "true",
+        "limit": 1000,
+    }
+
+    try:
+
+        records = fetch_all_pages(
+            session,
+            BIPAD_RAIN_URL,
+            params=params,
+            max_pages=20,
+        )
+
+    except Exception as exc:
+
+        print(
+            "BIPAD realtime rainfall "
+            f"failed: {exc}"
+        )
+
+        return (
+            {},
+            None,
+            0,
+            0,
+            0,
+        )
+
+    latest_by_station = {}
+
+    invalid = 0
+    stale = 0
+
+    for rec in records:
+
+        measured = extract_rain_time(
+            rec
+        )
+
+        rain = extract_rain_1h(
+            rec
+        )
+
+        if (
+            measured is None
+            or rain is None
+        ):
+
+            invalid += 1
+
+            continue
+
+        station_key = (
+            rec.get("stationSeriesId")
+            or rec.get("station")
+            or rec.get("id")
+            or rec.get("title")
+            or str(
+                record_coordinates(rec)
+            )
+        )
+
+        old = latest_by_station.get(
+            station_key
+        )
+
+        if (
+            old is None
+            or measured > old["_dt"]
+        ):
+
+            copy = dict(rec)
+
+            copy["_dt"] = measured
+            copy["_rain"] = rain
+
+            latest_by_station[
+                station_key
+            ] = copy
+
+    district_data = {}
+
+    mapped_id = 0
+    mapped_name = 0
+    mapped_coord = 0
+    unmapped = 0
+
+    latest_time = None
+
+    for rec in latest_by_station.values():
+
+        observed = rec["_dt"]
+
+        # Track latest observation even if stale.
+        if (
+            latest_time is None
+            or observed > latest_time
+        ):
+
+            latest_time = observed
+
+        # IMPORTANT:
+        # stale observations are retained only
+        # as source statistics, not current evidence.
+
+        if not is_fresh(
+            observed,
+            now,
+            BIPAD_FRESH_MINUTES,
+        ):
+
+            stale += 1
+
+            continue
+
+        district_id = None
+
+        # ---------------------------------------------------------------------
+        # DISTRICT ID
+        # ---------------------------------------------------------------------
+
+        try:
+
+            raw_id = int(
+                rec.get("district")
+            )
+
+            if raw_id in bipad_by_id:
+
+                district_id = raw_id
+
+                mapped_id += 1
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+
+            pass
+
+        # ---------------------------------------------------------------------
+        # DISTRICT NAME
+        # ---------------------------------------------------------------------
+
+        if district_id is None:
+
+            for key in (
+                "districtName",
+                "district_name",
+                "districtTitle",
+                "district_title",
+            ):
+
+                name = rec.get(key)
+
+                if not name:
+                    continue
+
+                norm = normalize_name(
+                    name
+                )
+
+                if norm in bipad_by_name:
+
+                    district_id = (
+                        bipad_by_name[norm]
+                    )
+
+                    mapped_name += 1
+
+                    break
+
+        # ---------------------------------------------------------------------
+        # COORDINATES
+        # ---------------------------------------------------------------------
+
+        if district_id is None:
+
+            coords = record_coordinates(
+                rec
+            )
+
+            if coords:
+
+                point = Point(
+                    coords[0],
+                    coords[1],
+                )
+
+                for geo in geo_districts:
+
+                    if geo[
+                        "prepared"
+                    ].contains(point):
+
+                        district_id = (
+                            geo["district_id"]
+                        )
+
+                        mapped_coord += 1
+
+                        break
+
+        if district_id is None:
+
+            unmapped += 1
+
+            continue
+
+        rain = rec["_rain"]
+
+        district = district_data.setdefault(
+            district_id,
+            {
+                "max_1h": None,
+                "station_count": 0,
+                "latest_observed_at": None,
+                "stations": [],
+            },
+        )
+
+        district[
+            "station_count"
+        ] += 1
+
+        if (
+            district["max_1h"] is None
+            or rain > district["max_1h"]
+        ):
+
+            district["max_1h"] = rain
+
+        current_latest = parse_dt(
+            district[
+                "latest_observed_at"
+            ]
+        )
+
+        if (
+            current_latest is None
+            or observed > current_latest
+        ):
+
+            district[
+                "latest_observed_at"
+            ] = iso(observed)
+
+        station_name = (
+            rec.get("stationTitle")
+            or rec.get("stationName")
+            or rec.get("title")
+            or rec.get("station")
+        )
+
+        district[
+            "stations"
+        ].append(
+            {
+                "station": station_name,
+                "rain_1h_mm": rain,
+                "observed_at": iso(
+                    observed
+                ),
+                "age_minutes": round(
+                    get_age_minutes(
+                        observed,
+                        now,
+                    ),
+                    1,
+                ),
+                "freshness": "FRESH",
+                "station_series_id":
+                    rec.get(
+                        "stationSeriesId"
+                    ),
+                "source":
+                    rec.get(
+                        "dataSource"
+                    )
+                    or "BIPAD/DHM",
+            }
+        )
+
+    valid = sum(
+        len(x["stations"])
+        for x in district_data.values()
+    )
+
+    print(
+        f"Rain records received: "
+        f"{len(records)}"
+    )
+
+    print(
+        f"Latest unique rain stations: "
+        f"{len(latest_by_station)}"
+    )
+
+    print(
+        f"Fresh rain stations used: "
+        f"{valid}"
+    )
+
+    print(
+        f"Stale rain stations excluded: "
+        f"{stale}"
+    )
+
+    print(
+        f"Rain invalid records: "
+        f"{invalid}"
+    )
+
+    print(
+        f"Rain mapped by district ID: "
+        f"{mapped_id}"
+    )
+
+    print(
+        f"Rain mapped by district name: "
+        f"{mapped_name}"
+    )
+
+    print(
+        f"Rain mapped by coordinates: "
+        f"{mapped_coord}"
+    )
+
+    print(
+        f"Rain unmapped: "
+        f"{unmapped}"
+    )
+
+    return (
+        district_data,
+        latest_time,
+        len(records),
+        invalid,
+        stale,
+    )
+
+
+# =============================================================================
+# BIPAD RIVER
+# =============================================================================
+
+def extract_river_time(
+    record: Dict[str, Any],
+) -> Optional[datetime]:
+
+    return parse_dt(
+        record.get("waterLevelOn")
+        or record.get("water_level_on")
+        or record.get("observedAt")
+        or record.get("observed_at")
+        or record.get("time")
+    )
+
+
+def extract_water_level(
+    record: Dict[str, Any],
+) -> Optional[float]:
+
+    return safe_float(
+        record.get("waterLevel")
+        if record.get("waterLevel")
+        is not None
+        else record.get(
+            "water_level"
+        )
+    )
+
+
+def fetch_bipad_river(
+    session: requests.Session,
+    geo_districts: List[Dict[str, Any]],
+    bipad_by_id: Dict[int, Dict[str, Any]],
+    bipad_by_name: Dict[str, int],
+    now: datetime,
+) -> Tuple[
+    Dict[int, Dict[str, Any]],
+    Optional[datetime],
+    int,
+    int,
+    int,
+]:
+
+    print(
+        "\nFetching BIPAD REALTIME river..."
+    )
+
+    params = {
+        "latest": "true",
+        "limit": 1000,
+    }
+
+    try:
+
+        records = fetch_all_pages(
+            session,
+            BIPAD_RIVER_URL,
+            params=params,
+            max_pages=20,
+        )
+
+    except Exception as exc:
+
+        print(
+            "BIPAD realtime river "
+            f"failed: {exc}"
+        )
+
+        return (
+            {},
+            None,
+            0,
+            0,
+            0,
+        )
+
+    latest_by_station = {}
+
+    invalid = 0
+    stale = 0
+
+    for rec in records:
+
+        observed = extract_river_time(
+            rec
+        )
+
+        water = extract_water_level(
+            rec
+        )
+
+        if (
+            observed is None
+            or water is None
+        ):
+
+            invalid += 1
+
+            continue
+
+        station_key = (
+            rec.get("stationSeriesId")
+            or rec.get("station")
+            or rec.get("id")
+            or rec.get("title")
+        )
+
+        old = latest_by_station.get(
+            station_key
+        )
+
+        if (
+            old is None
+            or observed > old["_dt"]
+        ):
+
+            copy = dict(rec)
+
+            copy["_dt"] = observed
+            copy["_water"] = water
+
+            latest_by_station[
+                station_key
+            ] = copy
+
+    district_data = {}
+
+    mapped_id = 0
+    mapped_name = 0
+    mapped_coord = 0
+    unmapped = 0
+
+    latest_time = None
+
+    threshold_invalid = 0
+
+    for rec in latest_by_station.values():
+
+        observed = rec["_dt"]
+        water = rec["_water"]
+
+        if (
+            latest_time is None
+            or observed > latest_time
+        ):
+
+            latest_time = observed
+
+        # Exclude stale observations from
+        # current river monitoring.
+
+        if not is_fresh(
+            observed,
+            now,
+            BIPAD_FRESH_MINUTES,
+        ):
+
+            stale += 1
+
+            continue
+
+        district_id = None
+
+        # ---------------------------------------------------------------------
+        # DISTRICT ID
+        # ---------------------------------------------------------------------
+
+        try:
+
+            raw_id = int(
+                rec.get("district")
+            )
+
+            if raw_id in bipad_by_id:
+
+                district_id = raw_id
+
+                mapped_id += 1
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+
+            pass
+
+        # ---------------------------------------------------------------------
+        # DISTRICT NAME
+        # ---------------------------------------------------------------------
+
+        if district_id is None:
+
+            for key in (
+                "districtName",
+                "district_name",
+                "districtTitle",
+                "district_title",
+            ):
+
+                name = rec.get(key)
+
+                if not name:
+                    continue
+
+                norm = normalize_name(
+                    name
+                )
+
+                if norm in bipad_by_name:
+
+                    district_id = (
+                        bipad_by_name[norm]
+                    )
+
+                    mapped_name += 1
+
+                    break
+
+        # ---------------------------------------------------------------------
+        # COORDINATES
+        # ---------------------------------------------------------------------
+
+        if district_id is None:
+
+            coords = record_coordinates(
+                rec
+            )
+
+            if coords:
+
+                point = Point(
+                    coords[0],
+                    coords[1],
+                )
+
+                for geo in geo_districts:
+
+                    if geo[
+                        "prepared"
+                    ].contains(point):
+
+                        district_id = (
+                            geo["district_id"]
+                        )
+
+                        mapped_coord += 1
+
+                        break
+
+        if district_id is None:
+
+            unmapped += 1
+
+            continue
+
+        # ---------------------------------------------------------------------
+        # THRESHOLDS
+        # ---------------------------------------------------------------------
+
+        warning = safe_float(
+            rec.get("warningLevel")
+            if rec.get("warningLevel")
+            is not None
+            else rec.get(
+                "warning_level"
+            )
+        )
+
+        danger = safe_float(
+            rec.get("dangerLevel")
+            if rec.get("dangerLevel")
+            is not None
+            else rec.get(
+                "danger_level"
+            )
+        )
+
+        threshold_valid = True
+
+        # Example bad BIPAD record:
+        #
+        # warning = 125
+        # danger  = 122.5
+        #
+        # That is physically/logically invalid
+        # because danger must be >= warning.
+
+        if (
+            warning is not None
+            and danger is not None
+            and danger < warning
+        ):
+
+            warning = None
+            danger = None
+
+            threshold_invalid += 1
+
+            threshold_valid = False
+
+        status = (
+            rec.get("status")
+            or rec.get(
+                "waterLevelStatus"
+            )
+            or rec.get(
+                "water_level_status"
+            )
+        )
+
+        trend = (
+            rec.get("steady")
+            or rec.get("trend")
+            or rec.get(
+                "waterLevelTrend"
+            )
+        )
+
+        station = (
+            rec.get("title")
+            or rec.get(
+                "stationTitle"
+            )
+            or rec.get(
+                "stationName"
+            )
+            or rec.get("station")
+        )
+
+        district = district_data.setdefault(
+            district_id,
+            {
+                "stations": [],
+                "warning_station_count": 0,
+                "danger_station_count": 0,
+                "rising_station_count": 0,
+                "latest_observed_at": None,
+            },
+        )
+
+        # ---------------------------------------------------------------------
+        # THRESHOLD COUNTS
+        # ---------------------------------------------------------------------
+
+        if (
+            warning is not None
+            and danger is not None
+        ):
+
+            if water >= danger:
+
+                district[
+                    "danger_station_count"
+                ] += 1
+
+            elif water >= warning:
+
+                district[
+                    "warning_station_count"
+                ] += 1
+
+        # ---------------------------------------------------------------------
+        # TREND
+        # ---------------------------------------------------------------------
+
+        if (
+            trend
+            and str(trend).upper()
+            == "RISING"
+        ):
+
+            district[
+                "rising_station_count"
+            ] += 1
+
+        # ---------------------------------------------------------------------
+        # LATEST OBSERVATION
+        # ---------------------------------------------------------------------
+
+        current_latest = parse_dt(
+            district[
+                "latest_observed_at"
+            ]
+        )
+
+        if (
+            current_latest is None
+            or observed > current_latest
+        ):
+
+            district[
+                "latest_observed_at"
+            ] = iso(observed)
+
+        # ---------------------------------------------------------------------
+        # UTILIZATION
+        # ---------------------------------------------------------------------
+
+        warning_utilization = None
+        danger_utilization = None
+
+        if (
+            warning is not None
+            and warning > 0
+        ):
+
+            warning_utilization = (
+                water / warning
+            )
+
+        if (
+            danger is not None
+            and danger > 0
+        ):
+
+            danger_utilization = (
+                water / danger
+            )
+
+        district[
+            "stations"
+        ].append(
+            {
+                "station": station,
+                "point": rec.get("point"),
+                "water_level_m": water,
+                "warning_level_m": warning,
+                "danger_level_m": danger,
+                "warning_utilization":
+                    warning_utilization,
+                "danger_utilization":
+                    danger_utilization,
+                "status": status,
+                "trend": trend,
+                "observed_at":
+                    iso(observed),
+                "age_minutes":
+                    round(
+                        get_age_minutes(
+                            observed,
+                            now,
+                        ),
+                        1,
+                    ),
+                "freshness":
+                    "FRESH",
+                "thresholds_valid":
+                    threshold_valid,
+                "station_series_id":
+                    rec.get(
+                        "stationSeriesId"
+                    ),
+                "source":
+                    rec.get(
+                        "dataSource"
+                    )
+                    or "BIPAD/DHM",
+            }
+        )
+
+    valid = sum(
+        len(x["stations"])
+        for x in district_data.values()
+    )
+
+    print(
+        f"River records received: "
+        f"{len(records)}"
+    )
+
+    print(
+        f"Unique river stations: "
+        f"{len(latest_by_station)}"
+    )
+
+    print(
+        f"Fresh river stations used: "
+        f"{valid}"
+    )
+
+    print(
+        f"Stale river stations excluded: "
+        f"{stale}"
+    )
+
+    print(
+        f"River invalid records: "
+        f"{invalid}"
+    )
+
+    print(
+        f"River mapped by district ID: "
+        f"{mapped_id}"
+    )
+
+    print(
+        f"River mapped by district name: "
+        f"{mapped_name}"
+    )
+
+    print(
+        f"River mapped by coordinates: "
+        f"{mapped_coord}"
+    )
+
+    print(
+        f"River unmapped: "
+        f"{unmapped}"
+    )
+
+    warning_observations = sum(
+        1
+        for d in district_data.values()
+        for s in d["stations"]
+        if s["warning_level_m"]
+        is not None
+    )
+
+    danger_observations = sum(
+        1
+        for d in district_data.values()
+        for s in d["stations"]
+        if s["danger_level_m"]
+        is not None
+    )
+
+    rising = sum(
+        1
+        for d in district_data.values()
+        for s in d["stations"]
+        if str(
+            s.get("trend", "")
+        ).upper()
+        == "RISING"
+    )
+
+    unique_warning = len(
+        {
+            s.get(
+                "station_series_id"
+            )
+            or s.get("station")
+            for d in district_data.values()
+            for s in d["stations"]
+            if s[
+                "warning_level_m"
+            ] is not None
+        }
+    )
+
+    unique_danger = len(
+        {
+            s.get(
+                "station_series_id"
+            )
+            or s.get("station")
+            for d in district_data.values()
+            for s in d["stations"]
+            if s[
+                "danger_level_m"
+            ] is not None
+        }
+    )
+
+    print(
+        "River observations with "
+        f"warning threshold: "
+        f"{warning_observations}"
+    )
+
+    print(
+        "River observations with "
+        f"danger threshold: "
+        f"{danger_observations}"
+    )
+
+    print(
+        "Unique stations with "
+        f"warning threshold: "
+        f"{unique_warning}"
+    )
+
+    print(
+        "Unique stations with "
+        f"danger threshold: "
+        f"{unique_danger}"
+    )
+
+    print(
+        f"Rising river stations: "
+        f"{rising}"
+    )
+
+    print(
+        f"Invalid threshold records: "
+        f"{threshold_invalid}"
+    )
+
+    return (
+        district_data,
+        latest_time,
+        len(records),
+        invalid,
+        stale,
+    )
+
+
+# =============================================================================
+# NASA IMERG
+# =============================================================================
+
+def parse_nasa_filename(
+    filename: str,
+) -> Optional[Dict[str, Any]]:
+
+    name = filename.split("/")[-1]
+
+    match = re.search(
+        r"3IMERG\.(\d{8})-S(\d{6})-E(\d{6})",
+        name,
+        re.IGNORECASE,
+    )
+
+    if not match:
+        return None
+
+    date_text, start_text, end_text = (
+        match.groups()
+    )
+
+    try:
+
+        start_dt = datetime.strptime(
+            date_text + start_text,
+            "%Y%m%d%H%M%S",
+        ).replace(
+            tzinfo=timezone.utc
+        )
+
+        end_dt = datetime.strptime(
+            date_text + end_text,
+            "%Y%m%d%H%M%S",
+        ).replace(
+            tzinfo=timezone.utc
+        )
+
+    except ValueError:
+
+        return None
+
+    if end_dt < start_dt:
+        end_dt += timedelta(days=1)
+
+    lower = name.lower()
+
+    if (
+        ".3hr." in lower
+        or ".1day." in lower
+    ):
+        return None
+
+    if "3b-hhr-e" not in lower:
+        return None
+
+    return {
+        "filename": name,
+        "start": start_dt,
+        "end": end_dt,
+    }
+
+
+def discover_nasa_files(
+    session: requests.Session,
+    start: datetime,
+    end: datetime,
+) -> List[Dict[str, Any]]:
+
+    print(
+        "\nDiscovering NASA IMERG "
+        "Early Run files..."
+    )
+
+    months = []
+
+    cursor = datetime(
+        start.year,
+        start.month,
+        1,
+        tzinfo=timezone.utc,
+    )
+
+    final_month = datetime(
+        end.year,
+        end.month,
+        1,
+        tzinfo=timezone.utc,
+    )
+
+    while cursor <= final_month:
+
+        months.append(
+            (
+                cursor.year,
+                cursor.month,
+            )
+        )
+
+        if cursor.month == 12:
+
+            cursor = datetime(
+                cursor.year + 1,
+                1,
+                1,
+                tzinfo=timezone.utc,
+            )
+
+        else:
+
+            cursor = datetime(
+                cursor.year,
+                cursor.month + 1,
+                1,
+                tzinfo=timezone.utc,
+            )
+
+    discovered = {}
+
+    auth = (
+        (NASA_USER, NASA_PASS)
+        if NASA_USER and NASA_PASS
+        else None
+    )
+
+    for year, month in months:
+
+        url = NASA_BASE.format(
+            year=year,
+            month=month,
+        )
+
+        try:
+
+            response = session.get(
+                url,
+                auth=auth,
+                timeout=REQUEST_TIMEOUT,
+            )
+
+            response.raise_for_status()
+
+        except Exception as exc:
+
+            print(
+                f"NASA directory failed: "
+                f"{url}"
+            )
+
+            print(
+                f"Reason: {exc}"
+            )
+
+            continue
+
+        links = re.findall(
+            r'href=["\']([^"\']+\.tif)["\']',
+            response.text,
+            flags=re.IGNORECASE,
+        )
+
+        if not links:
+
+            links = re.findall(
+                r'([A-Za-z0-9_.-]+\.tif)',
+                response.text,
+                flags=re.IGNORECASE,
+            )
+
+        for link in links:
+
+            filename = (
+                link.split("/")[-1]
+            )
+
+            info = parse_nasa_filename(
+                filename
+            )
+
+            if not info:
+                continue
+
+            if info["end"] < start:
+                continue
+
+            if info["start"] > end:
+                continue
+
+            discovered[
+                filename
+            ] = info
+
+    files = sorted(
+        discovered.values(),
+        key=lambda x: x["start"],
+    )
+
+    print(
+        "NASA files discovered in "
+        f"history window: {len(files)}"
+    )
+
+    return files
+
+
+def download_nasa_file(
+    session: requests.Session,
+    info: Dict[str, Any],
+) -> Optional[bytes]:
+
+    filename = info["filename"]
+
+    url = (
+        "https://jsimpsonhttps.pps.eosdis.nasa.gov/"
+        "imerg/gis/early/"
+        f"{info['start'].year:04d}/"
+        f"{info['start'].month:02d}/"
+        f"{filename}"
+    )
+
+    auth = (
+        (NASA_USER, NASA_PASS)
+        if NASA_USER and NASA_PASS
+        else None
+    )
+
+    try:
+
+        response = session.get(
+            url,
+            auth=auth,
+            timeout=REQUEST_TIMEOUT,
+        )
+
+        response.raise_for_status()
+
+        return response.content
+
+    except Exception as exc:
+
+        print(
+            f"NASA download failed: "
+            f"{filename}"
+        )
+
+        print(
+            f"Reason: {exc}"
+        )
+
+        return None
+
+
+def get_raster_window_from_bytes(
+    raw: bytes,
+    bbox: Tuple[
+        float,
+        float,
+        float,
+        float,
+    ],
+) -> Optional[np.ndarray]:
+
+    try:
+
+        import rasterio
+
+        from rasterio.io import MemoryFile
+
+    except ImportError:
+
+        print(
+            "ERROR: rasterio is required "
+            "for NASA GeoTIFF processing."
+        )
+
+        return None
+
+    try:
+
+        with MemoryFile(raw) as mem:
+
+            with mem.open() as src:
+
+                window = (
+                    rasterio.windows.from_bounds(
+                        bbox[0],
+                        bbox[1],
+                        bbox[2],
+                        bbox[3],
+                        transform=src.transform,
+                    )
+                )
+
+                window = (
+                    window
+                    .round_offsets()
+                    .round_lengths()
+                )
+
+                arr = src.read(
+                    1,
+                    window=window,
+                ).astype(float)
+
+                if src.nodata is not None:
+
+                    arr[
+                        arr == src.nodata
+                    ] = np.nan
+
+                arr[
+                    arr >= 29999
+                ] = np.nan
+
+                # NASA IMERG GIS rainfall
+                # is represented in tenths of mm.
+
+                arr = arr / 10.0
+
+                return arr
+
+    except Exception as exc:
+
+        print(
+            "NASA GeoTIFF processing "
+            f"failed: {exc}"
+        )
+
+        return None
+
+
+def district_masks_for_raster(
+    geo_districts: List[Dict[str, Any]],
+    raster_shape: Tuple[int, int],
+    bbox: Tuple[
+        float,
+        float,
+        float,
+        float,
+    ],
+) -> Dict[int, np.ndarray]:
+
+    rows, cols = raster_shape
+
+    min_lon, min_lat, max_lon, max_lat = (
+        bbox
+    )
+
+    lons = (
+        np.linspace(
+            min_lon,
+            max_lon,
+            cols,
+            endpoint=False,
+        )
+        + (
+            max_lon - min_lon
+        ) / cols / 2
+    )
+
+    lats = (
+        np.linspace(
+            max_lat,
+            min_lat,
+            rows,
+            endpoint=False,
+        )
+        - (
+            max_lat - min_lat
+        ) / rows / 2
+    )
+
+    lon_grid, lat_grid = np.meshgrid(
+        lons,
+        lats,
+    )
+
+    masks = {}
+
+    for geo in geo_districts:
+
+        district_id = geo[
+            "district_id"
+        ]
+
+        prepared = geo[
+            "prepared"
+        ]
+
+        mask = np.zeros(
+            (
+                rows,
+                cols,
+            ),
+            dtype=bool,
+        )
+
+        for r in range(rows):
+
+            for c in range(cols):
+
+                if prepared.contains(
+                    Point(
+                        lon_grid[r, c],
+                        lat_grid[r, c],
+                    )
+                ):
+
+                    mask[
+                        r,
+                        c
+                    ] = True
+
+        masks[
+            district_id
+        ] = mask
+
+    return masks
+
+
+def process_nasa_files(
+    session: requests.Session,
+    nasa_files: List[Dict[str, Any]],
+    geo_districts: List[Dict[str, Any]],
+) -> Tuple[
+    Dict[int, List[Dict[str, Any]]],
+    Optional[datetime],
+    int,
+    int,
+]:
+
+    print(
+        "\nProcessing NASA IMERG files..."
+    )
+
+    nasa_series = {
+        geo["district_id"]: []
+        for geo in geo_districts
+    }
+
+    if not nasa_files:
+
+        return (
+            nasa_series,
+            None,
+            0,
+            0,
+        )
+
+    bbox = (
+        80.0,
+        26.0,
+        89.0,
+        31.5,
+    )
+
+    latest_end = None
+
+    processed = 0
+    failed = 0
+
+    masks = None
+
+    for index, info in enumerate(
+        nasa_files,
+        start=1,
+    ):
+
+        print(
+            f"  [{index}/{len(nasa_files)}] "
+            f"{info['filename']}"
+        )
+
+        raw = download_nasa_file(
+            session,
+            info,
+        )
+
+        if raw is None:
+
+            failed += 1
+
+            continue
+
+        arr = (
+            get_raster_window_from_bytes(
+                raw,
+                bbox,
+            )
+        )
+
+        if (
+            arr is None
+            or arr.size == 0
+        ):
+
+            failed += 1
+
+            continue
+
+        if masks is None:
+
+            print(
+                "NASA Nepal raster window: "
+                f"{arr.shape[1]} x "
+                f"{arr.shape[0]}"
+            )
+
+            masks = (
+                district_masks_for_raster(
+                    geo_districts,
+                    arr.shape,
+                    bbox,
+                )
+            )
+
+            print(
+                "District masks built: "
+                f"{len(masks)}"
+            )
+
+        for (
+            district_id,
+            mask,
+        ) in masks.items():
+
+            values = arr[mask]
+
+            values = values[
+                np.isfinite(values)
+            ]
+
+            district_mean = (
+                float(
+                    np.mean(values)
+                )
+                if values.size
+                else None
+            )
+
+            nasa_series[
+                district_id
+            ].append(
+                {
+                    "start": iso(
+                        info["start"]
+                    ),
+                    "end": iso(
+                        info["end"]
+                    ),
+                    "mm": district_mean,
+                }
+            )
+
+        processed += 1
+
+        if (
+            latest_end is None
+            or info["end"] > latest_end
+        ):
+
+            latest_end = info["end"]
+
+    populated = sum(
+        1
+        for values
+        in nasa_series.values()
+        if values
+    )
+
+    print(
+        f"NASA files processed: "
+        f"{processed}"
+    )
+
+    print(
+        f"NASA files failed: "
+        f"{failed}"
+    )
+
+    print(
+        "NASA districts populated: "
+        f"{populated} / "
+        f"{len(geo_districts)}"
+    )
+
+    return (
+        nasa_series,
+        latest_end,
+        processed,
+        failed,
+    )
+
+
+# =============================================================================
+# NASA ACCUMULATIONS
+# =============================================================================
+
+def contiguous_accumulation(
+    series: List[Dict[str, Any]],
+    steps: int,
+) -> Tuple[
+    Optional[float],
+    int,
+]:
+
+    if len(series) < steps:
+
+        return None, 0
+
+    ordered = sorted(
+        series,
+        key=lambda x: x["end"],
+    )
+
+    latest = ordered[
+        -steps:
+    ]
+
+    parsed = []
+
+    for item in latest:
+
+        dt = parse_dt(
+            item["end"]
+        )
+
+        value = safe_float(
+            item.get("mm")
+        )
+
+        if (
+            dt is None
+            or value is None
+        ):
+
+            return None, 0
+
+        parsed.append(
+            (
+                dt,
+                value,
+            )
+        )
+
+    for i in range(
+        1,
+        len(parsed),
+    ):
+
+        delta = (
+            parsed[i][0]
+            - parsed[i - 1][0]
+        )
+
+        if abs(
+            delta.total_seconds()
+            - 1800
+        ) > 5:
+
+            return None, 0
+
+    return (
+        float(
+            sum(
+                v
+                for _, v
+                in parsed
+            )
+        ),
+        len(parsed),
+    )
+
+
+def calculate_nasa_metrics(
+    series: List[Dict[str, Any]],
+) -> Dict[str, Any]:
+
+    requested = {
+        "nasa_30min_mm": 1,
+        "nasa_1h_mm": 2,
+        "nasa_3h_mm": 6,
+        "nasa_6h_mm": 12,
+        "nasa_12h_mm": 24,
+        "nasa_24h_mm": 48,
+        "nasa_3day_mm": 144,
+        "nasa_5day_mm": 240,
+        "nasa_7day_mm": 336,
+    }
+
+    metrics = {}
+
+    for key, steps in requested.items():
+
+        value, used = (
+            contiguous_accumulation(
+                series,
+                steps,
+            )
+        )
+
+        metrics[key] = value
+
+        metrics[
+            key.replace(
+                "_mm",
+                "_timesteps",
+            )
+        ] = used
+
+    ordered = sorted(
+        series,
+        key=lambda x: x["end"],
+    )
+
+    coverage_hours = 0.0
+    gaps = 0
+
+    if ordered:
+
+        first_start = parse_dt(
+            ordered[0]["start"]
+        )
+
+        last_end = parse_dt(
+            ordered[-1]["end"]
+        )
+
+        if (
+            first_start
+            and last_end
+        ):
+
+            coverage_hours = max(
+                0.0,
+                (
+                    last_end
+                    - first_start
+                ).total_seconds()
+                / 3600,
+            )
+
+        for i in range(
+            1,
+            len(ordered),
+        ):
+
+            a = parse_dt(
+                ordered[
+                    i - 1
+                ]["end"]
+            )
+
+            b = parse_dt(
+                ordered[i]["end"]
+            )
+
+            if a and b:
+
+                if abs(
+                    (
+                        b - a
+                    ).total_seconds()
+                    - 1800
+                ) > 5:
+
+                    gaps += 1
+
+    metrics[
+        "nasa_available_timesteps"
+    ] = len(series)
+
+    metrics[
+        "nasa_available_coverage_hours"
+    ] = round(
+        coverage_hours,
+        3,
+    )
+
+    metrics[
+        "nasa_gap_count"
+    ] = gaps
+
+    return metrics
+
+
+# =============================================================================
+# MAIN
+# =============================================================================
+
+def main() -> None:
+
+    print("=" * 80)
+
+    print(
+        "PRAVAH - REALTIME "
+        "RAINFALL FUSION ENGINE v4"
+    )
+
+    print("=" * 80)
+
+    now = utc_now()
+
+    npt = timezone(
+        timedelta(
+            hours=5,
+            minutes=45,
+        )
+    )
+
+    print(
+        "\nCurrent UTC:",
+        iso(now),
+    )
+
+    print(
+        "Current NPT:",
+        iso(
+            now.astimezone(npt)
+        ),
+    )
+
+    print(
+        "\nBIPAD realtime freshness "
+        f"limit: "
+        f"{BIPAD_FRESH_MINUTES} minutes"
+    )
+
+    session = requests.Session()
+
+    session.headers.update(
+        {
+            "User-Agent":
+                "PRAVAH/1.0 "
+                "realtime-fusion"
+        }
+    )
+
+    # -------------------------------------------------------------------------
+    # DISTRICTS
+    # -------------------------------------------------------------------------
+
+    geo_districts, geo_by_id = (
+        load_geojson()
+    )
+
+    bipad_by_id, bipad_by_name = (
+        load_bipad_districts(
+            session
+        )
+    )
+
+    geo_to_bipad = (
+        build_geo_to_bipad_mapping(
+            geo_districts,
+            bipad_by_id,
+            bipad_by_name,
+        )
+    )
+
+    if len(
+        geo_to_bipad
+    ) != len(
+        geo_districts
+    ):
+
+        raise RuntimeError(
+            "District mapping is incomplete."
+        )
+
+    # -------------------------------------------------------------------------
+    # BIPAD REALTIME
+    # -------------------------------------------------------------------------
+
+    (
+        bipad_rain,
+        bipad_rain_latest,
+        rain_records,
+        rain_invalid,
+        rain_stale,
+    ) = fetch_bipad_rain(
+        session,
+        geo_districts,
+        bipad_by_id,
+        bipad_by_name,
+        now,
+    )
+
+    (
+        bipad_river,
+        bipad_river_latest,
+        river_records,
+        river_invalid,
+        river_stale,
+    ) = fetch_bipad_river(
+        session,
+        geo_districts,
+        bipad_by_id,
+        bipad_by_name,
+        now,
+    )
+
+    # -------------------------------------------------------------------------
+    # NASA
+    # -------------------------------------------------------------------------
+
+    nasa_start = (
+        now
+        - timedelta(
+            hours=NASA_HISTORY_HOURS
+        )
+    )
+
+    nasa_files = (
+        discover_nasa_files(
+            session,
+            nasa_start,
+            now,
+        )
+    )
+
+    print(
+        "\nNASA history window:"
+        f" {iso(nasa_start)}"
+        f" -> {iso(now)}"
+    )
+
+    print(
+        "NASA files selected: "
+        f"{len(nasa_files)}"
+    )
+
+    (
+        nasa_series,
+        nasa_latest_end,
+        nasa_processed,
+        nasa_failed,
+    ) = process_nasa_files(
+        session,
+        nasa_files,
+        geo_districts,
+    )
+
+    # -------------------------------------------------------------------------
+    # BUILD 77-DISTRICT OUTPUT
+    # -------------------------------------------------------------------------
+
+    districts = {}
+
+    for geo in geo_districts:
+
+        district_id = geo[
+            "district_id"
+        ]
+
+        district_name = geo[
+            "district"
+        ]
+
+        bipad_id = geo_to_bipad[
+            district_id
+        ]
+
+        rain = bipad_rain.get(
+            bipad_id,
+            {
+                "max_1h": None,
+                "station_count": 0,
+                "latest_observed_at": None,
+                "stations": [],
+            },
+        )
+
+        river = bipad_river.get(
+            bipad_id,
+            {
+                "stations": [],
+                "warning_station_count": 0,
+                "danger_station_count": 0,
+                "rising_station_count": 0,
+                "latest_observed_at": None,
+            },
+        )
+
+        series = nasa_series.get(
+            district_id,
+            [],
+        )
+
+        nasa = calculate_nasa_metrics(
+            series
+        )
+
+        districts[
+            str(district_id)
+        ] = {
+
+            "district_id":
+                district_id,
+
+            "district":
+                district_name,
+
+            "bipad_district_id":
+                bipad_id,
+
+            # -----------------------------------------------------------------
+            # RAINFALL
+            # -----------------------------------------------------------------
+
+            "rainfall": {
+
+                "bipad_1h_max":
+                    rain["max_1h"],
+
+                "bipad_station_count":
+                    rain[
+                        "station_count"
+                    ],
+
+                "bipad_latest_observed_at":
+                    rain[
+                        "latest_observed_at"
+                    ],
+
+                "nasa_30min_mm":
+                    nasa[
+                        "nasa_30min_mm"
+                    ],
+
+                "nasa_1h_mm":
+                    nasa[
+                        "nasa_1h_mm"
+                    ],
+
+                "nasa_3h_mm":
+                    nasa[
+                        "nasa_3h_mm"
+                    ],
+
+                "nasa_6h_mm":
+                    nasa[
+                        "nasa_6h_mm"
+                    ],
+
+                "nasa_12h_mm":
+                    nasa[
+                        "nasa_12h_mm"
+                    ],
+
+                "nasa_24h_mm":
+                    nasa[
+                        "nasa_24h_mm"
+                    ],
+
+                "nasa_3day_mm":
+                    nasa[
+                        "nasa_3day_mm"
+                    ],
+
+                "nasa_5day_mm":
+                    nasa[
+                        "nasa_5day_mm"
+                    ],
+
+                "nasa_7day_mm":
+                    nasa[
+                        "nasa_7day_mm"
+                    ],
+
+                "nasa_timesteps":
+                    nasa[
+                        "nasa_available_timesteps"
+                    ],
+
+                "nasa_available_coverage_hours":
+                    nasa[
+                        "nasa_available_coverage_hours"
+                    ],
+
+                "nasa_gap_count":
+                    nasa[
+                        "nasa_gap_count"
+                    ],
+
+                "nasa_source":
+                    "NASA IMERG Early Run",
+
+                "measurement_semantics": {
+
+                    "bipad":
+                        "Realtime local "
+                        "ground-station "
+                        "observation. "
+                        "1-hour maximum "
+                        "across fresh "
+                        "stations within "
+                        "the district.",
+
+                    "nasa":
+                        "District-level "
+                        "spatial average "
+                        "derived from "
+                        "NASA IMERG "
+                        "Early Run "
+                        "30-minute "
+                        "rainfall.",
+
+                    "fusion_rule":
+                        "BIPAD and NASA "
+                        "rainfall remain "
+                        "separate because "
+                        "they represent "
+                        "different spatial "
+                        "and temporal "
+                        "measurements.",
+
+                    "runoff_input":
+                        "NASA 6-hour "
+                        "district rainfall "
+                        "remains the "
+                        "initial SCS-CN "
+                        "runoff input.",
+
+                    "bipad_role":
+                        "Realtime local "
+                        "observation "
+                        "evidence for "
+                        "PRAVAH risk "
+                        "fusion.",
+
+                    "freshness":
+                        "BIPAD stations "
+                        "older than the "
+                        "configured freshness "
+                        "limit are excluded "
+                        "from current "
+                        "monitoring evidence.",
+
+                    "antecedent_rainfall":
+                        "NASA 3-day, "
+                        "5-day and "
+                        "7-day "
+                        "accumulations "
+                        "are available "
+                        "when sufficient "
+                        "contiguous "
+                        "observations "
+                        "exist.",
+                },
+            },
+
+            # -----------------------------------------------------------------
+            # RIVER
+            # -----------------------------------------------------------------
+
+            "river":
+                river,
+
+            # -----------------------------------------------------------------
+            # SOURCE STATUS
+            # -----------------------------------------------------------------
+
+            "source_status": {
+
+                "bipad_rain":
+                    freshness_status(
+                        bipad_rain_latest,
+                        now,
+                        BIPAD_FRESH_MINUTES,
+                    ),
+
+                "bipad_river":
+                    freshness_status(
+                        bipad_river_latest,
+                        now,
+                        BIPAD_FRESH_MINUTES,
+                    ),
+
+                "nasa":
+                    freshness_status(
+                        nasa_latest_end,
+                        now,
+                        NASA_FRESH_MINUTES,
+                    ),
+            },
+
+            # -----------------------------------------------------------------
+            # TIME
+            # -----------------------------------------------------------------
+
+            "time": {
+
+                "generated_at_utc":
+                    iso(now),
+
+                "generated_at_npt":
+                    iso(
+                        now.astimezone(
+                            npt
+                        )
+                    ),
+            },
+        }
+
+    # -------------------------------------------------------------------------
+    # COMMON WINDOW
+    # -------------------------------------------------------------------------
+
+    common_start = None
+
+    if nasa_latest_end:
+
+        common_start = (
+            nasa_latest_end
+            - timedelta(
+                hours=CURRENT_WINDOW_HOURS
+            )
+        )
+
+    # -------------------------------------------------------------------------
+    # TOP LEVEL OUTPUT
+    # -------------------------------------------------------------------------
+
+    output = {
+
+        "project":
+            "PRAVAH",
+
+        "pipeline_version":
+            "fusion_realtime_v4",
+
+        "generated_at_utc":
+            iso(now),
+
+        "generated_at_npt":
+            iso(
+                now.astimezone(npt)
+            ),
+
+        "analysis_window_hours":
+            CURRENT_WINDOW_HOURS,
+
+        "nasa_history_window_hours":
+            NASA_HISTORY_HOURS,
+
+        "bipad_freshness_limit_minutes":
+            BIPAD_FRESH_MINUTES,
+
+        "common_window": {
+
+            "start_utc":
+                iso(common_start),
+
+            "end_utc":
+                iso(nasa_latest_end),
+
+            "start_npt":
+                (
+                    iso(
+                        common_start.astimezone(
+                            npt
+                        )
+                    )
+                    if common_start
+                    else None
+                ),
+
+            "end_npt":
+                (
+                    iso(
+                        nasa_latest_end.astimezone(
+                            npt
+                        )
+                    )
+                    if nasa_latest_end
+                    else None
+                ),
+
+            "note":
+                "The common window is based "
+                "on the latest available NASA "
+                "observation. BIPAD realtime "
+                "stations have their own "
+                "observation timestamps and "
+                "freshness validation.",
+        },
+
+        # ---------------------------------------------------------------------
+        # SOURCES
+        # ---------------------------------------------------------------------
+
+        "sources": {
+
+            "bipad": {
+
+                "district_url":
+                    BIPAD_DISTRICT_URL,
+
+                "rain_url":
+                    BIPAD_RAIN_URL,
+
+                "river_url":
+                    BIPAD_RIVER_URL,
+
+                "rain_query":
+                    {
+                        "latest": True,
+                        "limit": 1000,
+                    },
+
+                "river_query":
+                    {
+                        "latest": True,
+                        "limit": 1000,
+                    },
+
+                "rain_records_received":
+                    rain_records,
+
+                "rain_invalid_records":
+                    rain_invalid,
+
+                "rain_stale_excluded":
+                    rain_stale,
+
+                "river_records_received":
+                    river_records,
+
+                "river_invalid_records":
+                    river_invalid,
+
+                "river_stale_excluded":
+                    river_stale,
+
+                "latest_rain_utc":
+                    iso(
+                        bipad_rain_latest
+                    ),
+
+                "latest_river_utc":
+                    iso(
+                        bipad_river_latest
+                    ),
+
+                "freshness_limit_minutes":
+                    BIPAD_FRESH_MINUTES,
+            },
+
+            "nasa": {
+
+                "product":
+                    "IMERG Early Run",
+
+                "interval":
+                    "30-minute",
+
+                "directory":
+                    NASA_BASE,
+
+                "history_window_hours":
+                    NASA_HISTORY_HOURS,
+
+                "files_selected":
+                    len(nasa_files),
+
+                "files_processed":
+                    nasa_processed,
+
+                "files_failed":
+                    nasa_failed,
+
+                "latest_file_end_utc":
+                    iso(nasa_latest_end),
+
+                "latest_file_end_npt":
+                    (
+                        iso(
+                            nasa_latest_end.astimezone(
+                                npt
+                            )
+                        )
+                        if nasa_latest_end
+                        else None
+                    ),
+            },
+        },
+
+        # ---------------------------------------------------------------------
+        # DISTRICTS
+        # ---------------------------------------------------------------------
+
+        "district_count":
+            len(districts),
+
+        "districts":
+            districts,
+
+        # ---------------------------------------------------------------------
+        # QUALITY
+        # ---------------------------------------------------------------------
+
+        "quality": {
+
+            "expected_districts":
+                77,
+
+            "actual_districts":
+                len(districts),
+
+            "district_count_ok":
+                len(districts) == 77,
+
+            "nasa_processed_files":
+                nasa_processed,
+
+            "nasa_failed_files":
+                nasa_failed,
+
+            "nasa_data_ok":
+                (
+                    nasa_processed > 0
+                    and nasa_failed == 0
+                ),
+
+            "bipad_rain_latest_utc":
+                iso(
+                    bipad_rain_latest
+                ),
+
+            "bipad_river_latest_utc":
+                iso(
+                    bipad_river_latest
+                ),
+
+            "nasa_latest_utc":
+                iso(
+                    nasa_latest_end
+                ),
+
+            "bipad_rain_freshness_limit_minutes":
+                BIPAD_FRESH_MINUTES,
+
+            "bipad_river_freshness_limit_minutes":
+                BIPAD_FRESH_MINUTES,
+
+            "bipad_rain_stale_excluded":
+                rain_stale,
+
+            "bipad_river_stale_excluded":
+                river_stale,
+        },
+
+        # ---------------------------------------------------------------------
+        # NOTES
+        # ---------------------------------------------------------------------
+
+        "notes": [
+
+            "BIPAD rainfall uses the realtime "
+            "rain-stations endpoint with "
+            "latest=true.",
+
+            "BIPAD river uses the realtime "
+            "river-stations endpoint with "
+            "latest=true.",
+
+            "Stale BIPAD observations are "
+            "excluded from current monitoring "
+            "evidence.",
+
+            "NASA and BIPAD rainfall are "
+            "not combined using max().",
+
+            "NASA rainfall is a district "
+            "spatial average.",
+
+            "BIPAD rainfall is local "
+            "ground-station evidence.",
+
+            "BIPAD river observations are "
+            "retained when threshold metadata "
+            "is missing.",
+
+            "Invalid river threshold pairs "
+            "where danger is below warning "
+            "are discarded.",
+
+            "Missing NASA accumulation "
+            "periods remain null rather "
+            "than being treated as zero.",
+
+            "NASA 6-hour rainfall remains "
+            "the initial SCS-CN runoff input.",
+
+            "NASA 3-day, 5-day and 7-day "
+            "rainfall are antecedent "
+            "rainfall features when enough "
+            "contiguous data exist.",
+        ],
+    }
+
+    # -------------------------------------------------------------------------
+    # SAVE
+    # -------------------------------------------------------------------------
+
+    OUTPUT_PATH.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    with OUTPUT_PATH.open(
+        "w",
+        encoding="utf-8",
+    ) as f:
+
+        json.dump(
+            output,
+            f,
+            indent=2,
+            ensure_ascii=False,
+        )
+
+    # -------------------------------------------------------------------------
+    # SUMMARY
+    # -------------------------------------------------------------------------
+
+    print(
+        "\n" + "=" * 80
+    )
+
+    print(
+        "PRAVAH FUSION SUMMARY"
+    )
+
+    print(
+        "=" * 80
+    )
+
+    print(
+        f"Districts:                    "
+        f"{len(districts)}"
+    )
+
+    print(
+        f"NASA files discovered:        "
+        f"{len(nasa_files)}"
+    )
+
+    print(
+        f"NASA files processed:         "
+        f"{nasa_processed}"
+    )
+
+    print(
+        f"NASA files failed:            "
+        f"{nasa_failed}"
+    )
+
+    print(
+        f"NASA latest observation:      "
+        f"{iso(nasa_latest_end)}"
+    )
+
+    print(
+        f"BIPAD latest rain:            "
+        f"{iso(bipad_rain_latest)}"
+    )
+
+    print(
+        f"BIPAD latest river:           "
+        f"{iso(bipad_river_latest)}"
+    )
+
+    print(
+        f"BIPAD stale rain excluded:    "
+        f"{rain_stale}"
+    )
+
+    print(
+        f"BIPAD stale river excluded:   "
+        f"{river_stale}"
+    )
+
+    # -------------------------------------------------------------------------
+    # NASA COVERAGE
+    # -------------------------------------------------------------------------
+
+    nasa_6h = sum(
+        1
+        for d in districts.values()
+        if d["rainfall"][
+            "nasa_6h_mm"
+        ] is not None
+    )
+
+    nasa_12h = sum(
+        1
+        for d in districts.values()
+        if d["rainfall"][
+            "nasa_12h_mm"
+        ] is not None
+    )
+
+    nasa_24h = sum(
+        1
+        for d in districts.values()
+        if d["rainfall"][
+            "nasa_24h_mm"
+        ] is not None
+    )
+
+    nasa_3day = sum(
+        1
+        for d in districts.values()
+        if d["rainfall"][
+            "nasa_3day_mm"
+        ] is not None
+    )
+
+    nasa_5day = sum(
+        1
+        for d in districts.values()
+        if d["rainfall"][
+            "nasa_5day_mm"
+        ] is not None
+    )
+
+    nasa_7day = sum(
+        1
+        for d in districts.values()
+        if d["rainfall"][
+            "nasa_7day_mm"
+        ] is not None
+    )
+
+    print(
+        f"NASA 6h districts:            "
+        f"{nasa_6h} / 77"
+    )
+
+    print(
+        f"NASA 12h districts:           "
+        f"{nasa_12h} / 77"
+    )
+
+    print(
+        f"NASA 24h districts:           "
+        f"{nasa_24h} / 77"
+    )
+
+    print(
+        f"NASA 3-day districts:         "
+        f"{nasa_3day} / 77"
+    )
+
+    print(
+        f"NASA 5-day districts:         "
+        f"{nasa_5day} / 77"
+    )
+
+    print(
+        f"NASA 7-day districts:         "
+        f"{nasa_7day} / 77"
+    )
+
+    # -------------------------------------------------------------------------
+    # BIPAD COVERAGE
+    # -------------------------------------------------------------------------
+
+    rain_districts = sum(
+        1
+        for d in districts.values()
+        if d["rainfall"][
+            "bipad_1h_max"
+        ] is not None
+    )
+
+    river_districts = sum(
+        1
+        for d in districts.values()
+        if d["river"][
+            "stations"
+        ]
+    )
+
+    rising_stations = sum(
+        d["river"][
+            "rising_station_count"
+        ]
+        for d in districts.values()
+    )
+
+    warning_stations = sum(
+        d["river"][
+            "warning_station_count"
+        ]
+        for d in districts.values()
+    )
+
+    danger_stations = sum(
+        d["river"][
+            "danger_station_count"
+        ]
+        for d in districts.values()
+    )
+
+    print(
+        f"BIPAD fresh rain districts:  "
+        f"{rain_districts} / 77"
+    )
+
+    print(
+        f"BIPAD fresh river districts: "
+        f"{river_districts} / 77"
+    )
+
+    print(
+        f"Rising river stations:         "
+        f"{rising_stations}"
+    )
+
+    print(
+        f"Warning stations:              "
+        f"{warning_stations}"
+    )
+
+    print(
+        f"Danger stations:               "
+        f"{danger_stations}"
+    )
+
+    print(
+        "\nSaved:"
+    )
+
+    print(
+        OUTPUT_PATH
+    )
+
+    # -------------------------------------------------------------------------
+    # VALIDATION
+    # -------------------------------------------------------------------------
+
+    if len(districts) != 77:
+
+        raise RuntimeError(
+            f"Expected 77 districts, "
+            f"got {len(districts)}."
+        )
+
+    if nasa_processed == 0:
+
+        raise RuntimeError(
+            "No NASA files were processed."
+        )
+
+
+if __name__ == "__main__":
+    main()
